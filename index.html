@@ -246,6 +246,28 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:36px 0;t
 .empty{text-align:center;padding:56px 24px;color:var(--faint);border:1px dashed var(--border);border-radius:var(--r-lg);grid-column:1/-1}
 .empty-ico{font-size:3rem;margin-bottom:14px}
 
+/* ── BOOK MODAL ── */
+.book-modal-bg{position:fixed;inset:0;z-index:990;background:hsl(220 13% 3%/.92);display:none;align-items:center;justify-content:center;padding:20px}
+.book-modal-bg.open{display:flex}
+.book-modal{background:var(--bg2);border:1px solid var(--border-g);border-radius:var(--r-lg);width:100%;max-width:720px;max-height:92vh;overflow-y:auto;position:relative}
+.book-modal-close{position:sticky;top:0;z-index:2;display:flex;justify-content:flex-end;padding:14px 18px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.book-modal-close button{width:36px;height:36px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);color:var(--muted);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.book-modal-close button:hover{border-color:var(--gold);color:var(--gold)}
+.book-modal-inner{padding:28px}
+.book-modal-hero{display:grid;grid-template-columns:180px 1fr;gap:28px;margin-bottom:32px}
+@media(max-width:600px){.book-modal-hero{grid-template-columns:1fr;text-align:center}}
+.book-modal-cover{width:100%;aspect-ratio:3/4;border-radius:12px;overflow:hidden;border:2px solid var(--border-g);background:var(--gold-sub);display:flex;align-items:center;justify-content:center;font-size:3rem}
+.book-modal-cover img{width:100%;height:100%;object-fit:cover}
+.book-modal-meta h2{font-size:1.5rem;font-weight:900;margin-bottom:8px}
+.book-modal-isbn{font-size:.75rem;color:var(--gold);background:var(--gold-sub);padding:4px 12px;border-radius:100px;display:inline-block;font-weight:700;margin-bottom:14px}
+.book-modal-desc{font-size:.95rem;color:var(--muted);line-height:2}
+.book-section{margin-bottom:28px}
+.book-section-title{display:flex;align-items:center;gap:10px;font-size:.85rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.book-section-body{font-size:.95rem;color:var(--muted);line-height:2;white-space:pre-wrap}
+.book-section-img{width:100%;border-radius:var(--r);border:1px solid var(--border);margin-top:10px}
+.book-detail-btn{display:inline-flex;align-items:center;gap:7px;margin-top:14px;padding:10px 20px;border-radius:10px;background:var(--gold-sub);border:1px solid var(--border-g);color:var(--gold);font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:var(--font)}
+.book-detail-btn:hover{background:hsl(43 60% 18%)}
+
 /* ── PLATFORMS ── */
 .platforms-bar{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:40px 0}
 .platforms-label{text-align:center;font-size:.75rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:28px}
@@ -378,8 +400,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:36px 0;t
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="label">مؤلفاتي</span>
-      <h2 class="h2">كتبٌ منشورة <span>وموثّقة رسميًا</span></h2>
-      <p class="desc">أعمالٌ مرجعية برقم إيداع دولي (ردمك) — دليلٌ على عطاءٍ يتجاوز الفصل الدراسي.</p>
+      <h2 class="h2">كتبٌ مؤلَّفة <span>وموثَّقة رسميًا</span></h2>
+      <p class="desc">أعمالٌ مرجعية برقم إيداع دولي (ردمك) — اضغط على أي كتاب لعرض غلافه ومقدمته وإهدائه ومحتواه وخاتمته.</p>
     </div>
     <div class="g3" id="books-container"></div>
   </div>
@@ -494,6 +516,14 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:36px 0;t
   </div>
 </footer>
 
+<!-- BOOK MODAL -->
+<div class="book-modal-bg" id="book-modal-bg" onclick="closeBookModal(event)">
+  <div class="book-modal" id="book-modal">
+    <div class="book-modal-close"><button onclick="closeBookModal()">✕</button></div>
+    <div class="book-modal-inner" id="book-modal-body"></div>
+  </div>
+</div>
+
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="lb-close" onclick="closeLightbox()">✕</button>
@@ -514,9 +544,10 @@ const DEFAULT = {
     platforms:{rwaq:'https://www.rwaq.org/users/mzaytoon303-20200421200302/'}
   },
   books:[
-    {id:1,title:'الروبوت للمبتدئين',isbn:'978-...',desc:'مرجعٌ شامل لتعليم الروبوتكس لطلاب المرحلة الابتدائية والمتوسطة.',img:''},
-    {id:2,title:'الحساب الذهني',isbn:'978-...',desc:'منهجيةٌ مبتكرة تحوّل الأرقام إلى مهارةٍ حياتية لا مسألةً مدرسية.',img:''},
-    {id:3,title:'تعليم الموهوبين',isbn:'978-...',desc:'دليلٌ للمعلمين في اكتشاف الموهوبين ورعايتهم برامجَ إثرائية فعّالة.',img:''}
+    {id:1,title:'أردوينو بلا قيود',isbn:'',desc:'مرجعٌ شاملٌ يأخذ بيد القارئ من الصفر حتى الاحتراف في عالم الأردوينو والبرمجة الإلكترونية — مناسبٌ للطلاب والمعلمين والهواة.',img:'',intro:'',dedication:'',content:'',conclusion:''},
+    {id:2,title:'الحساب الذهني للجميع',isbn:'',desc:'منهجيةٌ مبتكرة تحوّل الأرقام إلى مهارةٍ راسخة — يُعلّم الكتاب تقنيات الحساب الذهني السريع بأسلوبٍ ممتعٍ ومجرَّب مع الطلاب.',img:'',intro:'',dedication:'',content:'',conclusion:''},
+    {id:3,title:'منهج المشاريع والتفكير الهندسي STEAM',isbn:'',desc:'دليلٌ تطبيقي لتصميم مناهج STEAM المتكاملة القائمة على المشاريع — يجمع العلوم والتقنية والهندسة والفنون والرياضيات في منظومةٍ تعليمية واحدة.',img:'',intro:'',dedication:'',content:'',conclusion:''},
+    {id:4,title:'الفصحى للجميع',isbn:'',desc:'مساقٌ لغويٌّ فريد يُعيد الحياة للعربية الفصحى من خلال القصص والمحادثات اليومية — مناسبٌ لجميع الأعمار ويُعلَّم بأسلوبٍ محبَّبٍ وعملي.',img:'',intro:'',dedication:'',content:'',conclusion:''}
   ],
   programs:[
     {id:1,icon:'🤖',title:'روبوتكس وMakeblock',desc:'بناء فرق المسابقات وتأهيلها لبطولات WRO الدولية.'},
@@ -572,7 +603,8 @@ function render(){
   const d=getData();
   renderSite(d.site);
   renderPlatforms(d.site||{});
-  renderBooks(d.books||[]);
+  currentBooks=d.books||[];
+  renderBooks(currentBooks);
   renderPrograms(d.programs||[]);
   renderCourses(d.courses||[]);
   renderAchievements(d.achievements||[]);
@@ -627,19 +659,58 @@ function renderContact(s){
 function renderBooks(books){
   const c=document.getElementById('books-container');
   if(!books.length){c.innerHTML=emptyState('📚','أضف مؤلفاتك من لوحة التحكم');return}
-  c.innerHTML=books.map(b=>`
+  c.innerHTML=books.map((b,i)=>`
     <div class="book-card reveal">
       <div class="book-cover">${b.img?`<img src="${b.img}" alt="${b.title}">`:bookIcon()}</div>
       <div class="book-body">
         <h3>${b.title}</h3>
         ${b.isbn?`<div class="book-isbn">ISBN: ${b.isbn}</div>`:''}
         <p>${b.desc||''}</p>
+        <button class="book-detail-btn" onclick="openBookModal(${i})">📖 قراءة التفاصيل ←</button>
       </div>
     </div>`).join('');
   reReveal();
 }
 
 function bookIcon(){return`<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="hsl(43 96% 56%)" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>`}
+
+let currentBooks=[];
+function openBookModal(i){
+  const b=currentBooks[i];if(!b)return;
+  const body=document.getElementById('book-modal-body');
+  body.innerHTML=`
+    <div class="book-modal-hero">
+      <div class="book-modal-cover">${b.img?`<img src="${b.img}" alt="${b.title}">`:bookIcon()}</div>
+      <div class="book-modal-meta">
+        <h2>${b.title}</h2>
+        ${b.isbn?`<div class="book-modal-isbn">ISBN: ${b.isbn}</div>`:''}
+        <p class="book-modal-desc">${b.desc||''}</p>
+      </div>
+    </div>
+    ${bookSection('✍️','الإهداء',b.dedication,b.dedicationImg)}
+    ${bookSection('📝','المقدمة',b.intro,b.introImg)}
+    ${bookSection('📋','محتوى الكتاب',b.content,b.contentImg)}
+    ${bookSection('🔖','الخاتمة',b.conclusion,b.conclusionImg)}
+  `;
+  document.getElementById('book-modal-bg').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function bookSection(ico,title,text,img){
+  if(!text&&!img)return`<div class="book-section"><div class="book-section-title">${ico} ${title}</div><div class="book-section-body" style="color:var(--faint);font-style:italic">لم يُضف بعد — يمكن إضافته من لوحة التحكم</div></div>`;
+  return`<div class="book-section">
+    <div class="book-section-title">${ico} ${title}</div>
+    ${text?`<div class="book-section-body">${text}</div>`:''}
+    ${img?`<img class="book-section-img" src="${img}" alt="${title}">`:''}
+  </div>`;
+}
+
+function closeBookModal(e){
+  if(e&&e.target!==document.getElementById('book-modal-bg'))return;
+  document.getElementById('book-modal-bg').classList.remove('open');
+  document.body.style.overflow='';
+}
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeBookModal();closeLightbox()}});
 
 function renderPrograms(progs){
   const c=document.getElementById('programs-container');

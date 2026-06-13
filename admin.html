@@ -800,8 +800,34 @@ const MODAL_FORMS={
       <div class="field-row form-full"><label>عنوان الكتاب *</label><input class="inp" id="mf-title" placeholder="عنوان المؤلَّف"></div>
       <div class="field-row"><label>رقم ISBN / ردمك</label><input class="inp" id="mf-isbn" placeholder="978-..."></div>
       <div class="field-row"><label>سنة النشر</label><input class="inp" id="mf-year" placeholder="2024"></div>
-      <div class="field-row form-full"><label>وصف الكتاب</label><textarea class="inp" id="mf-desc" placeholder="نبذة قصيرة..."></textarea></div>
-      <div class="field-row form-full"><label>صورة غلاف الكتاب</label><div class="img-upload"><input type="file" accept="image/*" onchange="modalPreviewImg(this)"><div class="img-upload-ico">📚</div><p><strong>اضغط لرفع الغلاف</strong></p></div><div class="img-preview img-preview-sm" id="modal-img-preview"><img id="modal-img" src=""><button class="btn btn-danger btn-sm remove-img" onclick="clearModalImg()">🗑 إزالة</button></div></div>
+      <div class="field-row form-full"><label>وصف مختصر للكتاب</label><textarea class="inp" id="mf-desc" rows="3" placeholder="نبذة قصيرة تظهر على بطاقة الكتاب..."></textarea></div>
+      <div class="field-row form-full"><label>📷 صورة غلاف الكتاب</label>
+        <div class="img-upload"><input type="file" accept="image/*" onchange="modalPreviewImg(this,'modal-img-preview','modal-img')"><div class="img-upload-ico">📚</div><p><strong>اضغط لرفع الغلاف</strong></p></div>
+        <div class="img-preview img-preview-sm" id="modal-img-preview"><img id="modal-img" src=""><button class="btn btn-danger btn-sm remove-img" onclick="clearModalImg()">🗑 إزالة</button></div>
+      </div>
+      <div class="field-row form-full" style="border-top:1px solid var(--border);padding-top:18px;margin-top:4px">
+        <div style="font-size:.8rem;font-weight:800;color:var(--gold);margin-bottom:14px">📖 تفاصيل الكتاب — تظهر عند الضغط على "قراءة التفاصيل"</div>
+      </div>
+      <div class="field-row form-full"><label>✍️ الإهداء</label><textarea class="inp" id="mf-dedication" rows="4" placeholder="نص الإهداء كما هو في الكتاب..."></textarea></div>
+      <div class="field-row form-full"><label>📷 صورة صفحة الإهداء (اختياري)</label>
+        <div class="img-upload"><input type="file" accept="image/*" onchange="extraImgUpload(this,'dedicationImg')"><div class="img-upload-ico">🖼</div><p><strong>اضغط لرفع الصورة</strong></p></div>
+        <div class="img-preview img-preview-sm" id="prev-dedicationImg"><img id="pimg-dedicationImg" src=""><button class="btn btn-danger btn-sm remove-img" onclick="clearExtraImg('dedicationImg')">🗑</button></div>
+      </div>
+      <div class="field-row form-full"><label>📝 المقدمة</label><textarea class="inp" id="mf-intro" rows="6" placeholder="نص مقدمة الكتاب..."></textarea></div>
+      <div class="field-row form-full"><label>📷 صورة صفحة المقدمة (اختياري)</label>
+        <div class="img-upload"><input type="file" accept="image/*" onchange="extraImgUpload(this,'introImg')"><div class="img-upload-ico">🖼</div><p><strong>اضغط لرفع الصورة</strong></p></div>
+        <div class="img-preview img-preview-sm" id="prev-introImg"><img id="pimg-introImg" src=""><button class="btn btn-danger btn-sm remove-img" onclick="clearExtraImg('introImg')">🗑</button></div>
+      </div>
+      <div class="field-row form-full"><label>📋 محتوى الكتاب (الفصول والمحاور)</label><textarea class="inp" id="mf-content" rows="6" placeholder="مثال:&#10;الفصل الأول: مقدمة في الأردوينو&#10;الفصل الثاني: البرمجة الأساسية&#10;..."></textarea></div>
+      <div class="field-row form-full"><label>📷 صورة فهرس المحتوى (اختياري)</label>
+        <div class="img-upload"><input type="file" accept="image/*" onchange="extraImgUpload(this,'contentImg')"><div class="img-upload-ico">🖼</div><p><strong>اضغط لرفع الصورة</strong></p></div>
+        <div class="img-preview img-preview-sm" id="prev-contentImg"><img id="pimg-contentImg" src=""><button class="btn btn-danger btn-sm remove-img" onclick="clearExtraImg('contentImg')">🗑</button></div>
+      </div>
+      <div class="field-row form-full"><label>🔖 الخاتمة</label><textarea class="inp" id="mf-conclusion" rows="4" placeholder="نص خاتمة الكتاب..."></textarea></div>
+      <div class="field-row form-full"><label>📷 صورة صفحة الخاتمة (اختياري)</label>
+        <div class="img-upload"><input type="file" accept="image/*" onchange="extraImgUpload(this,'conclusionImg')"><div class="img-upload-ico">🖼</div><p><strong>اضغط لرفع الصورة</strong></p></div>
+        <div class="img-preview img-preview-sm" id="prev-conclusionImg"><img id="pimg-conclusionImg" src=""><button class="btn btn-danger btn-sm remove-img" onclick="clearExtraImg('conclusionImg')">🗑</button></div>
+      </div>
     </div>`,
   program:`
     <div class="form-grid">
@@ -851,14 +877,20 @@ function openModal(type,index=-1,cat=''){
   document.getElementById('modal-body').innerHTML=MODAL_FORMS[type]||'';
   document.getElementById('modal-bg').classList.add('open');
 
+  window._extraImgs={};
   if(isEdit){
     const item=getItemByType(type,index,cat);
     if(!item)return;
     fill('mf-title',item.title);fill('mf-desc',item.desc);fill('mf-icon',item.icon);
     fill('mf-isbn',item.isbn);fill('mf-year',item.year);fill('mf-provider',item.provider);
     fill('mf-url',item.url);fill('mf-caption',item.caption);
+    fill('mf-intro',item.intro);fill('mf-dedication',item.dedication);
+    fill('mf-content',item.content);fill('mf-conclusion',item.conclusion);
     if(document.getElementById('mf-cat')&&item.category)document.getElementById('mf-cat').value=item.category;
     if(item.img){window._modalImg=item.img;showModalImgPreview(item.img)}
+    ['introImg','dedicationImg','contentImg','conclusionImg'].forEach(f=>{
+      if(item[f]){window._extraImgs[f]=item[f];const p=document.getElementById(`prev-${f}`);const i=document.getElementById(`pimg-${f}`);if(p&&i){i.src=item[f];p.style.display='block'}}
+    });
   }
 }
 
@@ -892,22 +924,51 @@ function showModalImgPreview(src){
 
 function clearModalImg(){window._modalImg='';const p=document.getElementById('modal-img-preview');if(p)p.style.display='none'}
 
+// صور إضافية للكتاب
+window._extraImgs={};
+function extraImgUpload(input,field){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    window._extraImgs[field]=e.target.result;
+    const prev=document.getElementById(`prev-${field}`);
+    const img=document.getElementById(`pimg-${field}`);
+    if(prev&&img){img.src=e.target.result;prev.style.display='block'}
+  };
+  reader.readAsDataURL(file);
+}
+function clearExtraImg(field){
+  window._extraImgs[field]='';
+  const prev=document.getElementById(`prev-${field}`);
+  if(prev)prev.style.display='none';
+}
+
 function modalSave(){
   const title=(document.getElementById('mf-title')||{}).value||'';
   if(!title&&modalType!=='gallery-item'){toast('يرجى إدخال العنوان','err');return}
 
+  const g=id=>( document.getElementById(id)||{}).value||'';
   const item={
     id:Date.now(),
     title,
-    desc:(document.getElementById('mf-desc')||{}).value||'',
-    icon:(document.getElementById('mf-icon')||{}).value||'',
-    isbn:(document.getElementById('mf-isbn')||{}).value||'',
-    year:(document.getElementById('mf-year')||{}).value||'',
-    provider:(document.getElementById('mf-provider')||{}).value||'',
-    url:(document.getElementById('mf-url')||{}).value||'',
-    caption:(document.getElementById('mf-caption')||{}).value||'',
+    desc:g('mf-desc'),
+    icon:g('mf-icon'),
+    isbn:g('mf-isbn'),
+    year:g('mf-year'),
+    provider:g('mf-provider'),
+    url:g('mf-url'),
+    caption:g('mf-caption'),
     img:window._modalImg||'',
-    category:(document.getElementById('mf-cat')||{}).value||'stem'
+    category:g('mf-cat')||'stem',
+    // حقول الكتاب
+    intro:g('mf-intro'),
+    dedication:g('mf-dedication'),
+    content:g('mf-content'),
+    conclusion:g('mf-conclusion'),
+    introImg:window._extraImgs.introImg||'',
+    dedicationImg:window._extraImgs.dedicationImg||'',
+    contentImg:window._extraImgs.contentImg||'',
+    conclusionImg:window._extraImgs.conclusionImg||''
   };
 
   if(modalType==='innovation'){
