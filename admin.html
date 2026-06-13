@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم — محمد زيتون</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:hsl(220 13% 5%);
+  --bg2:hsl(220 11% 8%);
+  --bg3:hsl(220 10% 12%);
+  --bg4:hsl(220 9% 16%);
+  --gold:hsl(43 96% 56%);
+  --gold-dim:hsl(43 72% 38%);
+  --gold-sub:hsl(43 50% 12%);
+  --text:hsl(45 20% 92%);
+  --muted:hsl(220 8% 60%);
+  --faint:hsl(220 6% 38%);
+  --border:hsl(220 15% 18%);
+  --border-g:hsl(43 55% 30%);
+  --red:hsl(0 75% 55%);
+  --red-sub:hsl(0 50% 12%);
+  --green:hsl(145 60% 45%);
+  --green-sub:hsl(145 40% 10%);
+  --r:12px;--r-lg:18px;
+  --font:'Tajawal',sans-serif;
+  --sidebar:260px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--font);cursor:pointer}
+input,textarea,select{font-family:var(--font);direction:rtl}
+
+/* ── LOGIN ─────────────────────────────────────── */
+#login-screen{
+  position:fixed;inset:0;z-index:999;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+}
+.login-box{
+  width:100%;max-width:400px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:40px 36px;
+  box-shadow:0 32px 80px hsl(0 0% 0%/.5);
+}
+.login-logo{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:28px}
+.login-dot{width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px var(--gold)}
+.login-name{font-size:1.2rem;font-weight:800}
+.login-box h2{text-align:center;font-size:1.3rem;font-weight:800;margin-bottom:6px}
+.login-sub{text-align:center;font-size:.85rem;color:var(--muted);margin-bottom:28px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:7px}
+.inp{
+  width:100%;padding:12px 16px;border-radius:var(--r);
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);font-size:.95rem;outline:none;transition:border-color .2s;
+}
+.inp:focus{border-color:var(--border-g)}
+.btn-login{
+  width:100%;padding:14px;border-radius:var(--r);
+  background:var(--gold);color:hsl(43 50% 8%);
+  font-weight:800;font-size:1rem;border:none;cursor:pointer;transition:all .2s;
+}
+.btn-login:hover{background:hsl(43 100% 62%);transform:translateY(-1px)}
+.login-err{background:var(--red-sub);border:1px solid var(--red);border-radius:8px;padding:10px 14px;font-size:.85rem;color:var(--red);margin-bottom:16px;display:none}
+
+/* ── LAYOUT ─────────────────────────────────────── */
+#app{display:flex;min-height:100vh;display:none}
+
+/* Sidebar */
+.sidebar{
+  width:var(--sidebar);flex-shrink:0;
+  background:var(--bg2);border-inline-end:1px solid var(--border);
+  display:flex;flex-direction:column;position:fixed;top:0;bottom:0;right:0;
+  overflow-y:auto;z-index:50;
+}
+.sidebar-brand{
+  padding:22px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.s-dot{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.sidebar-brand span{font-size:.95rem;font-weight:800}
+.sidebar-brand small{display:block;font-size:.72rem;color:var(--muted);margin-top:1px}
+.sidebar-nav{padding:14px 12px;flex:1}
+.nav-group{margin-bottom:6px}
+.nav-group-label{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding:8px 10px 4px}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;
+  border-radius:var(--r);color:var(--muted);font-size:.88rem;font-weight:500;
+  cursor:pointer;transition:all .2s;border:none;background:none;width:100%;text-align:right;
+}
+.nav-item .ico{font-size:1.1rem;flex-shrink:0}
+.nav-item:hover{color:var(--text);background:var(--bg3)}
+.nav-item.active{color:var(--gold);background:var(--gold-sub);font-weight:700}
+.sidebar-footer{padding:16px 12px;border-top:1px solid var(--border)}
+.btn-logout{
+  display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:var(--r);
+  color:var(--muted);font-size:.85rem;background:none;border:1px solid var(--border);
+  width:100%;cursor:pointer;transition:all .2s;font-family:var(--font);
+}
+.btn-logout:hover{color:var(--red);border-color:var(--red);background:var(--red-sub)}
+.btn-preview{
+  display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:var(--r);
+  color:var(--gold);font-size:.85rem;background:var(--gold-sub);border:1px solid var(--border-g);
+  width:100%;cursor:pointer;transition:all .2s;margin-bottom:8px;font-family:var(--font);text-align:right;
+}
+.btn-preview:hover{background:hsl(43 60% 18%)}
+
+/* Main */
+.main{
+  margin-inline-end:var(--sidebar);flex:1;
+  display:flex;flex-direction:column;min-height:100vh;
+}
+.topbar{
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:40;
+}
+.topbar-title{font-size:1.05rem;font-weight:800}
+.topbar-acts{display:flex;align-items:center;gap:10px}
+.content{padding:28px;flex:1}
+
+/* ── CARDS & PANELS ──────────────────────────────── */
+.panel{display:none}
+.panel.active{display:block}
+
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.card-head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-head h3{font-size:.95rem;font-weight:800}
+.card-body{padding:22px}
+
+/* Buttons */
+.btn{padding:9px 18px;border-radius:var(--r);font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;border:none;font-family:var(--font)}
+.btn-gold{background:var(--gold);color:hsl(43 50% 8%)}
+.btn-gold:hover{background:hsl(43 100% 62%)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--muted)}
+.btn-outline:hover{border-color:var(--border-g);color:var(--gold)}
+.btn-danger{background:var(--red-sub);border:1px solid var(--red);color:var(--red)}
+.btn-danger:hover{background:var(--red);color:#fff}
+.btn-sm{padding:6px 12px;font-size:.78rem}
+.btn-success{background:var(--green-sub);border:1px solid var(--green);color:var(--green)}
+.btn-success:hover{background:var(--green);color:#fff}
+
+/* Form */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.form-grid{grid-template-columns:1fr}}
+.form-full{grid-column:1/-1}
+.field-row{margin-bottom:16px}
+.field-row label{display:block;font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:6px}
+.field-row .inp{width:100%}
+.field-row textarea.inp{min-height:90px;resize:vertical}
+.field-row select.inp{appearance:none;-webkit-appearance:none;cursor:pointer}
+.char-count{font-size:.7rem;color:var(--faint);text-align:left;margin-top:3px}
+
+/* Image upload */
+.img-upload{border:2px dashed var(--border);border-radius:var(--r);padding:28px;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:var(--bg3)}
+.img-upload:hover{border-color:var(--border-g);background:var(--gold-sub)}
+.img-upload input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.img-upload-ico{font-size:2.2rem;margin-bottom:8px}
+.img-upload p{font-size:.82rem;color:var(--muted)}
+.img-upload p strong{color:var(--gold)}
+.img-preview{margin-top:12px;display:none}
+.img-preview img{width:100%;max-height:180px;object-fit:cover;border-radius:var(--r);border:1px solid var(--border)}
+.img-preview-sm img{max-height:100px;object-fit:contain}
+.remove-img{margin-top:8px;font-size:.75rem}
+
+/* Items list */
+.items-list{display:flex;flex-direction:column;gap:10px}
+.item-row{
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);
+  padding:14px 16px;display:flex;align-items:center;gap:14px;transition:border-color .2s;
+}
+.item-row:hover{border-color:var(--border-g)}
+.item-thumb{width:50px;height:50px;border-radius:8px;object-fit:cover;background:var(--bg4);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;overflow:hidden}
+.item-thumb img{width:100%;height:100%;object-fit:cover}
+.item-info{flex:1;min-width:0}
+.item-info h4{font-size:.88rem;font-weight:700;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item-info p{font-size:.75rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item-acts{display:flex;gap:6px;flex-shrink:0}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);z-index:9999;background:var(--green-sub);border:1px solid var(--green);color:var(--green);padding:12px 24px;border-radius:100px;font-size:.88rem;font-weight:700;transition:transform .3s;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.err{background:var(--red-sub);border-color:var(--red);color:var(--red)}
+
+/* Modal */
+.modal-bg{position:fixed;inset:0;z-index:900;background:hsl(0 0% 0%/.7);display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);width:100%;max-width:560px;max-height:90vh;overflow-y:auto}
+.modal-head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg2);z-index:1}
+.modal-head h3{font-size:1rem;font-weight:800}
+.modal-close{width:34px;height:34px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);color:var(--muted);font-size:1rem;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.modal-close:hover{color:var(--red);border-color:var(--red)}
+.modal-body{padding:22px}
+.modal-foot{padding:16px 22px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+
+/* Dashboard stats */
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+@media(max-width:800px){.dash-grid{grid-template-columns:repeat(2,1fr)}}
+.dash-stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px;transition:border-color .2s}
+.dash-stat:hover{border-color:var(--border-g)}
+.dash-stat .ico{font-size:1.8rem;margin-bottom:10px}
+.dash-stat .num{font-size:2rem;font-weight:900;color:var(--gold)}
+.dash-stat .lbl{font-size:.8rem;color:var(--muted);margin-top:4px}
+
+/* Password panel */
+.pass-info{background:var(--gold-sub);border:1px solid var(--border-g);border-radius:var(--r);padding:14px 18px;font-size:.85rem;color:var(--gold);margin-bottom:16px}
+
+/* Responsive sidebar toggle */
+@media(max-width:800px){
+  .sidebar{transform:translateX(100%);transition:transform .3s}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-inline-end:0}
+  .sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:49;display:none}
+  .sidebar-overlay.show{display:block}
+  .topbar-menu{display:flex!important}
+}
+.topbar-menu{display:none;width:38px;height:38px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-size:1.2rem;align-items:center;justify-content:center;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo"><div class="login-dot"></div><span>محمد زيتون</span></div>
+    <h2>لوحة التحكم</h2>
+    <p class="login-sub">أدخل كلمة المرور للدخول</p>
+    <div class="login-err" id="login-err">كلمة المرور غير صحيحة</div>
+    <div class="field">
+      <label>كلمة المرور</label>
+      <input class="inp" type="password" id="pass-inp" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn-login" onclick="doLogin()">دخول ←</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <!-- Sidebar overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="s-dot"></div>
+      <div><span>لوحة التحكم</span><small>محمد زيتون</small></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-group-label">الرئيسية</div>
+        <button class="nav-item active" onclick="showPanel('dashboard',this)"><span class="ico">🏠</span>نظرة عامة</button>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label">المحتوى</div>
+        <button class="nav-item" onclick="showPanel('site',this)"><span class="ico">👤</span>بياناتي الشخصية</button>
+        <button class="nav-item" onclick="showPanel('books',this)"><span class="ico">📚</span>المؤلفات</button>
+        <button class="nav-item" onclick="showPanel('programs',this)"><span class="ico">💡</span>برامج التطوير</button>
+        <button class="nav-item" onclick="showPanel('courses',this)"><span class="ico">🎓</span>الدورات والشهادات</button>
+        <button class="nav-item" onclick="showPanel('achievements',this)"><span class="ico">🏆</span>الإنجازات</button>
+        <button class="nav-item" onclick="showPanel('gallery',this)"><span class="ico">🖼</span>معرض الصور</button>
+        <button class="nav-item" onclick="showPanel('videos',this)"><span class="ico">🎬</span>الفيديوهات</button>
+        <button class="nav-item" onclick="showPanel('innovations',this)"><span class="ico">🔬</span>الابتكارات</button>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-label">الإعدادات</div>
+        <button class="nav-item" onclick="showPanel('password',this)"><span class="ico">🔑</span>تغيير كلمة المرور</button>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-preview" onclick="window.open('index.html','_blank')">🌐 معاينة الموقع</button>
+      <button class="btn-logout" onclick="doLogout()">🚪 تسجيل الخروج</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="topbar-menu" id="topbar-menu" onclick="openSidebar()">☰</button>
+        <span class="topbar-title" id="panel-title">نظرة عامة</span>
+      </div>
+      <div class="topbar-acts">
+        <button class="btn btn-gold btn-sm" onclick="saveAllData()">💾 حفظ التغييرات</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="panel active" id="panel-dashboard">
+        <div class="dash-grid" id="dash-stats"></div>
+        <div class="card">
+          <div class="card-head"><h3>⚡ بدء سريع</h3></div>
+          <div class="card-body" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+            <button class="btn btn-outline" style="justify-content:center;padding:18px" onclick="showPanel('site',document.querySelector('[onclick*=site]'))">👤 تعديل بياناتك</button>
+            <button class="btn btn-outline" style="justify-content:center;padding:18px" onclick="showPanel('books',document.querySelector('[onclick*=books]'))">📚 إضافة مؤلَّف</button>
+            <button class="btn btn-outline" style="justify-content:center;padding:18px" onclick="showPanel('gallery',document.querySelector('[onclick*=gallery]'))">🖼 رفع صور</button>
+            <button class="btn btn-outline" style="justify-content:center;padding:18px" onclick="showPanel('courses',document.querySelector('[onclick*=courses]'))">🎓 إضافة دورة</button>
+            <button class="btn btn-outline" style="justify-content:center;padding:18px" onclick="showPanel('achievements',document.querySelector('[onclick*=achievements]'))">🏆 إضافة إنجاز</button>
+            <button class="btn btn-outline" style="justify-content:center;padding:18px" onclick="showPanel('innovations',document.querySelector('[onclick*=innovations]'))">🔬 إضافة ابتكار</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SITE -->
+      <div class="panel" id="panel-site">
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-head"><h3>📷 الصورة الشخصية</h3></div>
+          <div class="card-body">
+            <div class="img-upload" id="photo-upload-area">
+              <input type="file" accept="image/*" onchange="previewPhoto(this,'photo-preview','site-photo')">
+              <div class="img-upload-ico">📷</div>
+              <p><strong>اضغط لرفع صورتك الشخصية</strong></p>
+              <p>JPG, PNG — الحجم الموصى به 500×500</p>
+            </div>
+            <div class="img-preview" id="photo-preview">
+              <img id="photo-preview-img" src="" alt="">
+              <button class="btn btn-danger btn-sm remove-img" onclick="removePhoto()">🗑 إزالة الصورة</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-head"><h3>👤 البيانات الشخصية</h3></div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="field-row form-full"><label>النبذة التعريفية</label><textarea class="inp" id="site-bio" rows="5" placeholder="اكتب نبذة احترافية عنك..."></textarea></div>
+              <div class="field-row"><label>البريد الإلكتروني</label><input class="inp" id="site-email" type="email" placeholder="email@example.com"></div>
+              <div class="field-row"><label>رقم الواتساب (مع رمز الدولة)</label><input class="inp" id="site-whatsapp" type="tel" placeholder="+966501234567"></div>
+              <div class="field-row"><label>الموقع / المدينة</label><input class="inp" id="site-location" placeholder="المملكة العربية السعودية"></div>
+            </div>
+            <button class="btn btn-gold" onclick="saveSiteData()">💾 حفظ البيانات</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-head">
+            <h3>🌐 روابط منصات التدريس</h3>
+            <span style="font-size:.75rem;color:var(--muted)">تظهر تلقائياً في الموقع عند إضافة الرابط</span>
+          </div>
+          <div class="card-body">
+            <div style="background:var(--gold-sub);border:1px solid var(--border-g);border-radius:var(--r);padding:12px 16px;font-size:.82rem;color:var(--gold);margin-bottom:18px">
+              💡 ضع رابط <strong>ملفك الشخصي</strong> أو <strong>صفحة دوراتك</strong> على كل منصة — اتركه فارغاً إذا لم تكن مسجلاً فيها
+            </div>
+            <div class="form-grid">
+              <div class="field-row">
+                <label>🟢 رواق (rwaq.org)</label>
+                <input class="inp" id="plt-rwaq" type="url" placeholder="https://www.rwaq.org/instructor/...">
+              </div>
+              <div class="field-row">
+                <label>🔵 إدراك (edraak.org)</label>
+                <input class="inp" id="plt-edraak" type="url" placeholder="https://www.edraak.org/...">
+              </div>
+              <div class="field-row">
+                <label>🟣 Udemy</label>
+                <input class="inp" id="plt-udemy" type="url" placeholder="https://www.udemy.com/user/...">
+              </div>
+              <div class="field-row">
+                <label>🔴 يوتيوب</label>
+                <input class="inp" id="plt-youtube" type="url" placeholder="https://www.youtube.com/channel/...">
+              </div>
+              <div class="field-row">
+                <label>🔷 LinkedIn Learning</label>
+                <input class="inp" id="plt-linkedin" type="url" placeholder="https://www.linkedin.com/in/...">
+              </div>
+              <div class="field-row">
+                <label>🔹 Coursera</label>
+                <input class="inp" id="plt-coursera" type="url" placeholder="https://www.coursera.org/instructor/...">
+              </div>
+              <div class="field-row">
+                <label>🌐 منصة أخرى — الاسم</label>
+                <input class="inp" id="plt-other1_name" placeholder="اسم المنصة">
+              </div>
+              <div class="field-row">
+                <label>🌐 منصة أخرى — الرابط</label>
+                <input class="inp" id="plt-other1" type="url" placeholder="https://...">
+              </div>
+              <div class="field-row">
+                <label>🌐 منصة ثانية — الاسم</label>
+                <input class="inp" id="plt-other2_name" placeholder="اسم المنصة">
+              </div>
+              <div class="field-row">
+                <label>🌐 منصة ثانية — الرابط</label>
+                <input class="inp" id="plt-other2" type="url" placeholder="https://...">
+              </div>
+            </div>
+            <button class="btn btn-gold" onclick="saveSiteData()">💾 حفظ الروابط</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOOKS -->
+      <div class="panel" id="panel-books">
+        <div class="card">
+          <div class="card-head">
+            <h3>📚 المؤلفات (<span id="books-count">0</span>)</h3>
+            <button class="btn btn-gold btn-sm" onclick="openModal('book')">+ إضافة مؤلَّف</button>
+          </div>
+          <div class="card-body"><div class="items-list" id="books-list"></div></div>
+        </div>
+      </div>
+
+      <!-- PROGRAMS -->
+      <div class="panel" id="panel-programs">
+        <div class="card">
+          <div class="card-head">
+            <h3>💡 برامج التطوير (<span id="programs-count">0</span>)</h3>
+            <button class="btn btn-gold btn-sm" onclick="openModal('program')">+ إضافة برنامج</button>
+          </div>
+          <div class="card-body"><div class="items-list" id="programs-list"></div></div>
+        </div>
+      </div>
+
+      <!-- COURSES -->
+      <div class="panel" id="panel-courses">
+        <div class="card">
+          <div class="card-head">
+            <h3>🎓 الدورات والشهادات (<span id="courses-count">0</span>)</h3>
+            <button class="btn btn-gold btn-sm" onclick="openModal('course')">+ إضافة دورة</button>
+          </div>
+          <div class="card-body"><div class="items-list" id="courses-list"></div></div>
+        </div>
+      </div>
+
+      <!-- ACHIEVEMENTS -->
+      <div class="panel" id="panel-achievements">
+        <div class="card">
+          <div class="card-head">
+            <h3>🏆 الإنجازات (<span id="achievements-count">0</span>)</h3>
+            <button class="btn btn-gold btn-sm" onclick="openModal('achievement')">+ إضافة إنجاز</button>
+          </div>
+          <div class="card-body"><div class="items-list" id="achievements-list"></div></div>
+        </div>
+      </div>
+
+      <!-- GALLERY -->
+      <div class="panel" id="panel-gallery">
+        <div class="card">
+          <div class="card-head">
+            <h3>🖼 معرض الصور (<span id="gallery-count">0</span>)</h3>
+            <button class="btn btn-gold btn-sm" onclick="openModal('gallery-item')">+ رفع صورة</button>
+          </div>
+          <div class="card-body">
+            <div style="background:var(--bg3);border:1px dashed var(--border);border-radius:var(--r);padding:18px;text-align:center;margin-bottom:16px;cursor:pointer;position:relative" onclick="document.getElementById('bulk-upload').click()">
+              <input type="file" id="bulk-upload" accept="image/*" multiple style="display:none" onchange="bulkUpload(this)">
+              <span style="font-size:1.8rem">📂</span>
+              <p style="color:var(--gold);font-weight:700;font-size:.88rem;margin-top:6px">رفع صور متعددة دفعة واحدة</p>
+              <p style="font-size:.75rem;color:var(--muted)">اضغط لاختيار عدة صور</p>
+            </div>
+            <div class="items-list" id="gallery-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEOS -->
+      <div class="panel" id="panel-videos">
+        <div class="card">
+          <div class="card-head">
+            <h3>🎬 الفيديوهات (<span id="videos-count">0</span>)</h3>
+            <button class="btn btn-gold btn-sm" onclick="openModal('video')">+ إضافة فيديو</button>
+          </div>
+          <div class="card-body"><div class="items-list" id="videos-list"></div></div>
+        </div>
+      </div>
+
+      <!-- INNOVATIONS -->
+      <div class="panel" id="panel-innovations">
+        <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap">
+          <button class="btn btn-gold btn-sm" onclick="openModal('innovation')">+ إضافة ابتكار</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="card">
+            <div class="card-head"><h3>🔬 STEM (<span id="inn-stem-count">0</span>)</h3></div>
+            <div class="card-body"><div class="items-list" id="inn-stem-list"></div></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3>🤖 روبوت (<span id="inn-robotics-count">0</span>)</h3></div>
+            <div class="card-body"><div class="items-list" id="inn-robotics-list"></div></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3>🎮 ألعاب (<span id="inn-games-count">0</span>)</h3></div>
+            <div class="card-body"><div class="items-list" id="inn-games-list"></div></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3>🖥 منصات (<span id="inn-platforms-count">0</span>)</h3></div>
+            <div class="card-body"><div class="items-list" id="inn-platforms-list"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="panel" id="panel-password">
+        <div class="card" style="max-width:440px">
+          <div class="card-head"><h3>🔑 تغيير كلمة المرور</h3></div>
+          <div class="card-body">
+            <div class="pass-info">كلمة المرور الافتراضية: <strong>admin123</strong></div>
+            <div class="field-row"><label>كلمة المرور الحالية</label><input class="inp" type="password" id="old-pass" placeholder="••••••••"></div>
+            <div class="field-row"><label>كلمة المرور الجديدة</label><input class="inp" type="password" id="new-pass" placeholder="••••••••"></div>
+            <div class="field-row"><label>تأكيد كلمة المرور الجديدة</label><input class="inp" type="password" id="confirm-pass" placeholder="••••••••"></div>
+            <button class="btn btn-gold" onclick="changePassword()">✓ تغيير كلمة المرور</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- content -->
+  </div><!-- main -->
+</div><!-- app -->
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal-bg" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">إضافة</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeModal()">إلغاء</button>
+      <button class="btn btn-gold" id="modal-save-btn" onclick="modalSave()">💾 حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ────────────────────────────────────────────
+const PASS_KEY='zeytoon_pass';
+function getPass(){return localStorage.getItem(PASS_KEY)||'admin123'}
+
+function doLogin(){
+  const v=document.getElementById('pass-inp').value;
+  if(v===getPass()){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='flex';
+    loadAll();
+  } else {
+    const err=document.getElementById('login-err');
+    err.style.display='block';
+    document.getElementById('pass-inp').value='';
+    setTimeout(()=>err.style.display='none',3000);
+  }
+}
+
+function doLogout(){
+  document.getElementById('app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('pass-inp').value='';
+}
+
+function changePassword(){
+  const old=document.getElementById('old-pass').value;
+  const nw=document.getElementById('new-pass').value;
+  const cf=document.getElementById('confirm-pass').value;
+  if(old!==getPass()){toast('كلمة المرور الحالية غير صحيحة','err');return}
+  if(nw.length<4){toast('كلمة المرور يجب أن تكون 4 أحرف على الأقل','err');return}
+  if(nw!==cf){toast('كلمتا المرور غير متطابقتين','err');return}
+  localStorage.setItem(PASS_KEY,nw);
+  document.getElementById('old-pass').value='';
+  document.getElementById('new-pass').value='';
+  document.getElementById('confirm-pass').value='';
+  toast('✓ تم تغيير كلمة المرور بنجاح');
+}
+
+// ── DATA ────────────────────────────────────────────
+const DATA_KEY='zeytoon_data';
+function getData(){
+  try{const r=localStorage.getItem(DATA_KEY);return r?JSON.parse(r):getDefault()}catch(e){return getDefault()}
+}
+function saveData(d){localStorage.setItem(DATA_KEY,JSON.stringify(d));toast('✓ تم الحفظ بنجاح')}
+function getDefault(){
+  return{
+    site:{name:'محمد محمود السيد زيتون',title:'مشرف أكاديمي للتطوير والموهبة والروبوت',bio:'',photo:'',email:'zaytoon304@gmail.com',whatsapp:'',location:'المملكة العربية السعودية',platforms:{rwaq:'https://www.rwaq.org/users/mzaytoon303-20200421200302/'}},
+    books:[],programs:[],courses:[],achievements:[],gallery:[],videos:[],
+    innovations:{stem:[],robotics:[],games:[],platforms:[]}
+  };
+}
+
+let data=getDefault();
+
+function loadAll(){
+  data=getData();
+  loadSite();
+  renderList('books');
+  renderList('programs');
+  renderList('courses');
+  renderList('achievements');
+  renderList('gallery');
+  renderList('videos');
+  renderList('innovations');
+  renderDash();
+}
+
+function saveAllData(){
+  saveSiteData(false);
+  saveData(data);
+}
+
+// ── PANELS ──────────────────────────────────────────
+const panelTitles={dashboard:'نظرة عامة',site:'البيانات الشخصية',books:'المؤلفات',programs:'برامج التطوير',courses:'الدورات والشهادات',achievements:'الإنجازات',gallery:'معرض الصور',videos:'الفيديوهات',innovations:'الابتكارات',password:'تغيير كلمة المرور'};
+
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`panel-${id}`).classList.add('active');
+  if(btn)btn.classList.add('active');
+  document.getElementById('panel-title').textContent=panelTitles[id]||id;
+  closeSidebar();
+}
+
+// Sidebar mobile
+function openSidebar(){
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('show');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('show');
+}
+
+// ── SITE DATA ────────────────────────────────────────
+const PLT_KEYS=['rwaq','edraak','udemy','youtube','linkedin','coursera','other1','other1_name','other2','other2_name'];
+
+function loadSite(){
+  const s=data.site||{};
+  document.getElementById('site-bio').value=s.bio||'';
+  document.getElementById('site-email').value=s.email||'';
+  document.getElementById('site-whatsapp').value=s.whatsapp||'';
+  document.getElementById('site-location').value=s.location||'';
+  if(s.photo)showPhotoPreview(s.photo);
+  const p=s.platforms||{};
+  PLT_KEYS.forEach(k=>{const el=document.getElementById(`plt-${k}`);if(el)el.value=p[k]||''});
+}
+
+function saveSiteData(showToast=true){
+  if(!data.site)data.site={};
+  data.site.bio=document.getElementById('site-bio').value;
+  data.site.email=document.getElementById('site-email').value;
+  data.site.whatsapp=document.getElementById('site-whatsapp').value;
+  data.site.location=document.getElementById('site-location').value;
+  if(window._sitePhoto)data.site.photo=window._sitePhoto;
+  const platforms={};
+  PLT_KEYS.forEach(k=>{const el=document.getElementById(`plt-${k}`);if(el&&el.value)platforms[k]=el.value});
+  data.site.platforms=platforms;
+  localStorage.setItem(DATA_KEY,JSON.stringify(data));
+  if(showToast)toast('✓ تم حفظ البيانات بنجاح');
+}
+
+// Photo upload
+function previewPhoto(input,previewId,dataField){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    window._sitePhoto=e.target.result;
+    showPhotoPreview(e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function showPhotoPreview(src){
+  const prev=document.getElementById('photo-preview');
+  document.getElementById('photo-preview-img').src=src;
+  prev.style.display='block';
+}
+
+function removePhoto(){
+  window._sitePhoto='';
+  data.site.photo='';
+  document.getElementById('photo-preview').style.display='none';
+  document.getElementById('photo-preview-img').src='';
+}
+
+// ── LISTS ────────────────────────────────────────────
+function renderList(type){
+  if(type==='innovations'){renderInnovationLists();return}
+  const items=data[type]||[];
+  const list=document.getElementById(`${type}-list`);
+  const count=document.getElementById(`${type}-count`);
+  if(count)count.textContent=items.length;
+  if(!list)return;
+  if(!items.length){
+    list.innerHTML=`<div style="text-align:center;padding:32px;color:var(--faint);font-size:.85rem">لا يوجد محتوى بعد — اضغط + للإضافة</div>`;
+    return;
+  }
+  list.innerHTML=items.map((item,i)=>`
+    <div class="item-row">
+      <div class="item-thumb">${getItemThumb(item,type)}</div>
+      <div class="item-info">
+        <h4>${item.title||item.name||'—'}</h4>
+        <p>${getItemSub(item,type)}</p>
+      </div>
+      <div class="item-acts">
+        <button class="btn btn-outline btn-sm" onclick="openModal('${type.replace('-item','')}',${i})">✏</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteItem('${type}',${i})">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+function getItemThumb(item,type){
+  if(item.img) return`<img src="${item.img}" alt="">`;
+  const icons={books:'📚',programs:'💡',courses:'🎓',achievements:'🏆','gallery-item':'🖼',videos:'🎬',innovation:'🔬'};
+  return item.icon||icons[type]||'📌';
+}
+
+function getItemSub(item,type){
+  if(type==='books')return item.isbn?`ISBN: ${item.isbn}`:'';
+  if(type==='courses')return`${item.provider||''} ${item.year?'· '+item.year:''}`;
+  if(type==='achievements')return item.year||'';
+  if(type==='videos')return item.url||'';
+  return item.desc?item.desc.substring(0,50)+'…':'';
+}
+
+function renderInnovationLists(){
+  const cats=['stem','robotics','games','platforms'];
+  cats.forEach(cat=>{
+    const items=(data.innovations||{})[cat]||[];
+    const list=document.getElementById(`inn-${cat}-list`);
+    const count=document.getElementById(`inn-${cat}-count`);
+    if(count)count.textContent=items.length;
+    if(!list)return;
+    if(!items.length){list.innerHTML=`<div style="text-align:center;padding:20px;color:var(--faint);font-size:.82rem">لا يوجد محتوى</div>`;return}
+    list.innerHTML=items.map((item,i)=>`
+      <div class="item-row">
+        <div class="item-thumb">${item.img?`<img src="${item.img}" alt="">`:'🔬'}</div>
+        <div class="item-info"><h4>${item.title||'—'}</h4><p>${(item.desc||'').substring(0,40)}…</p></div>
+        <div class="item-acts">
+          <button class="btn btn-outline btn-sm" onclick="openModal('innovation',${i},'${cat}')">✏</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteInnovation('${cat}',${i})">🗑</button>
+        </div>
+      </div>`).join('');
+  });
+}
+
+// ── DELETE ────────────────────────────────────────────
+function deleteItem(type,i){
+  if(!confirm('هل أنت متأكد من الحذف؟'))return;
+  data[type].splice(i,1);
+  localStorage.setItem(DATA_KEY,JSON.stringify(data));
+  renderList(type);
+  renderDash();
+  toast('✓ تم الحذف');
+}
+
+function deleteInnovation(cat,i){
+  if(!confirm('هل أنت متأكد من الحذف؟'))return;
+  data.innovations[cat].splice(i,1);
+  localStorage.setItem(DATA_KEY,JSON.stringify(data));
+  renderList('innovations');
+  toast('✓ تم الحذف');
+}
+
+// ── BULK UPLOAD ────────────────────────────────────────
+function bulkUpload(input){
+  const files=Array.from(input.files);
+  let loaded=0;
+  files.forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      if(!data.gallery)data.gallery=[];
+      data.gallery.push({id:Date.now()+Math.random(),img:e.target.result,caption:file.name.replace(/\.[^/.]+$/,'')});
+      loaded++;
+      if(loaded===files.length){
+        localStorage.setItem(DATA_KEY,JSON.stringify(data));
+        renderList('gallery');
+        renderDash();
+        toast(`✓ تم رفع ${loaded} صورة`);
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value='';
+}
+
+// ── DASHBOARD ────────────────────────────────────────
+function renderDash(){
+  const d=data;
+  document.getElementById('dash-stats').innerHTML=`
+    <div class="dash-stat"><div class="ico">📚</div><div class="num">${(d.books||[]).length}</div><div class="lbl">مؤلفات</div></div>
+    <div class="dash-stat"><div class="ico">🎓</div><div class="num">${(d.courses||[]).length}</div><div class="lbl">دورات وشهادات</div></div>
+    <div class="dash-stat"><div class="ico">🏆</div><div class="num">${(d.achievements||[]).length}</div><div class="lbl">إنجازات</div></div>
+    <div class="dash-stat"><div class="ico">🖼</div><div class="num">${(d.gallery||[]).length}</div><div class="lbl">صور في المعرض</div></div>
+    <div class="dash-stat"><div class="ico">🎬</div><div class="num">${(d.videos||[]).length}</div><div class="lbl">فيديوهات</div></div>
+    <div class="dash-stat"><div class="ico">💡</div><div class="num">${(d.programs||[]).length}</div><div class="lbl">برامج تطوير</div></div>
+    <div class="dash-stat"><div class="ico">🔬</div><div class="num">${Object.values(d.innovations||{}).flat().length}</div><div class="lbl">ابتكارات</div></div>
+    <div class="dash-stat"><div class="ico">📊</div><div class="num">${Object.values(d).flat().length}</div><div class="lbl">إجمالي العناصر</div></div>`;
+}
+
+// ── MODAL ────────────────────────────────────────────
+let modalType='',modalIndex=-1,modalCat='';
+
+const MODAL_FORMS={
+  book:`
+    <div class="form-grid">
+      <div class="field-row form-full"><label>عنوان الكتاب *</label><input class="inp" id="mf-title" placeholder="عنوان المؤلَّف"></div>
+      <div class="field-row"><label>رقم ISBN / ردمك</label><input class="inp" id="mf-isbn" placeholder="978-..."></div>
+      <div class="field-row"><label>سنة النشر</label><input class="inp" id="mf-year" placeholder="2024"></div>
+      <div class="field-row form-full"><label>وصف الكتاب</label><textarea class="inp" id="mf-desc" placeholder="نبذة قصيرة..."></textarea></div>
+      <div class="field-row form-full"><label>صورة غلاف الكتاب</label><div class="img-upload"><input type="file" accept="image/*" onchange="modalPreviewImg(this)"><div class="img-upload-ico">📚</div><p><strong>اضغط لرفع الغلاف</strong></p></div><div class="img-preview img-preview-sm" id="modal-img-preview"><img id="modal-img" src=""><button class="btn btn-danger btn-sm remove-img" onclick="clearModalImg()">🗑 إزالة</button></div></div>
+    </div>`,
+  program:`
+    <div class="form-grid">
+      <div class="field-row form-full"><label>اسم البرنامج *</label><input class="inp" id="mf-title" placeholder="اسم البرنامج أو المساق"></div>
+      <div class="field-row"><label>الأيقونة (رمز)</label><input class="inp" id="mf-icon" placeholder="🤖" maxlength="2"></div>
+      <div class="field-row form-full"><label>وصف البرنامج</label><textarea class="inp" id="mf-desc" placeholder="ما الذي يقدمه هذا البرنامج؟"></textarea></div>
+    </div>`,
+  course:`
+    <div class="form-grid">
+      <div class="field-row form-full"><label>اسم الدورة أو الشهادة *</label><input class="inp" id="mf-title" placeholder="عنوان الدورة"></div>
+      <div class="field-row"><label>الجهة المانحة</label><input class="inp" id="mf-provider" placeholder="مثال: مايكروسوفت"></div>
+      <div class="field-row"><label>السنة</label><input class="inp" id="mf-year" placeholder="2024"></div>
+      <div class="field-row form-full"><label>صورة الشهادة</label><div class="img-upload"><input type="file" accept="image/*" onchange="modalPreviewImg(this)"><div class="img-upload-ico">🎓</div><p><strong>اضغط لرفع صورة الشهادة</strong></p></div><div class="img-preview img-preview-sm" id="modal-img-preview"><img id="modal-img" src=""><button class="btn btn-danger btn-sm remove-img" onclick="clearModalImg()">🗑 إزالة</button></div></div>
+    </div>`,
+  achievement:`
+    <div class="form-grid">
+      <div class="field-row form-full"><label>عنوان الإنجاز *</label><input class="inp" id="mf-title" placeholder="اسم الجائزة أو الإنجاز"></div>
+      <div class="field-row"><label>السنة</label><input class="inp" id="mf-year" placeholder="2024"></div>
+      <div class="field-row"><label>الأيقونة (رمز)</label><input class="inp" id="mf-icon" placeholder="🏆" maxlength="2"></div>
+      <div class="field-row form-full"><label>وصف الإنجاز</label><textarea class="inp" id="mf-desc" placeholder="تفاصيل الإنجاز..."></textarea></div>
+    </div>`,
+  'gallery-item':`
+    <div class="field-row"><label>التسمية التوضيحية</label><input class="inp" id="mf-caption" placeholder="وصف للصورة"></div>
+    <div class="field-row"><label>الصورة *</label><div class="img-upload"><input type="file" accept="image/*" onchange="modalPreviewImg(this)"><div class="img-upload-ico">🖼</div><p><strong>اضغط لرفع الصورة</strong></p></div><div class="img-preview" id="modal-img-preview"><img id="modal-img" src=""><button class="btn btn-danger btn-sm remove-img" onclick="clearModalImg()">🗑 إزالة</button></div></div>`,
+  video:`
+    <div class="form-grid">
+      <div class="field-row form-full"><label>عنوان الفيديو *</label><input class="inp" id="mf-title" placeholder="اسم الفيديو"></div>
+      <div class="field-row form-full"><label>رابط يوتيوب أو الفيديو</label><input class="inp" id="mf-url" placeholder="https://youtube.com/watch?v=..."></div>
+      <div class="field-row form-full"><label>صورة مصغّرة (اختياري)</label><div class="img-upload"><input type="file" accept="image/*" onchange="modalPreviewImg(this)"><div class="img-upload-ico">🎬</div><p><strong>اضغط لرفع صورة مصغّرة</strong></p></div><div class="img-preview img-preview-sm" id="modal-img-preview"><img id="modal-img" src=""><button class="btn btn-danger btn-sm remove-img" onclick="clearModalImg()">🗑 إزالة</button></div></div>
+    </div>`,
+  innovation:`
+    <div class="form-grid">
+      <div class="field-row form-full"><label>اسم الابتكار *</label><input class="inp" id="mf-title" placeholder="عنوان الابتكار أو المشروع"></div>
+      <div class="field-row form-full"><label>التصنيف *</label><select class="inp" id="mf-cat"><option value="stem">🔬 STEM</option><option value="robotics">🤖 روبوت</option><option value="games">🎮 ألعاب</option><option value="platforms">🖥 منصات</option></select></div>
+      <div class="field-row form-full"><label>وصف الابتكار</label><textarea class="inp" id="mf-desc" placeholder="ما هذا الابتكار وما الذي يحله؟"></textarea></div>
+      <div class="field-row form-full"><label>صورة الابتكار</label><div class="img-upload"><input type="file" accept="image/*" onchange="modalPreviewImg(this)"><div class="img-upload-ico">🔬</div><p><strong>اضغط لرفع صورة</strong></p></div><div class="img-preview img-preview-sm" id="modal-img-preview"><img id="modal-img" src=""><button class="btn btn-danger btn-sm remove-img" onclick="clearModalImg()">🗑 إزالة</button></div></div>
+    </div>`
+};
+
+const MODAL_TITLES={book:'مؤلَّف',program:'برنامج تطوير',course:'دورة / شهادة',achievement:'إنجاز','gallery-item':'صورة',video:'فيديو',innovation:'ابتكار'};
+
+function openModal(type,index=-1,cat=''){
+  modalType=type;modalIndex=index;modalCat=cat;
+  window._modalImg='';
+  const isEdit=index>=0;
+  document.getElementById('modal-title').textContent=(isEdit?'تعديل ':'إضافة ')+( MODAL_TITLES[type]||type);
+  document.getElementById('modal-body').innerHTML=MODAL_FORMS[type]||'';
+  document.getElementById('modal-bg').classList.add('open');
+
+  if(isEdit){
+    const item=getItemByType(type,index,cat);
+    if(!item)return;
+    fill('mf-title',item.title);fill('mf-desc',item.desc);fill('mf-icon',item.icon);
+    fill('mf-isbn',item.isbn);fill('mf-year',item.year);fill('mf-provider',item.provider);
+    fill('mf-url',item.url);fill('mf-caption',item.caption);
+    if(document.getElementById('mf-cat')&&item.category)document.getElementById('mf-cat').value=item.category;
+    if(item.img){window._modalImg=item.img;showModalImgPreview(item.img)}
+  }
+}
+
+function fill(id,val){const el=document.getElementById(id);if(el&&val)el.value=val}
+
+function getItemByType(type,i,cat){
+  if(type==='innovation')return(data.innovations[cat]||[])[i];
+  const key=type==='gallery-item'?'gallery':type+'s';
+  return(data[key]||[])[i];
+}
+
+function closeModal(e){
+  if(e&&e.target!==document.getElementById('modal-bg'))return;
+  document.getElementById('modal-bg').classList.remove('open');
+  window._modalImg='';
+}
+
+function modalPreviewImg(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{window._modalImg=e.target.result;showModalImgPreview(e.target.result)};
+  reader.readAsDataURL(file);
+}
+
+function showModalImgPreview(src){
+  const p=document.getElementById('modal-img-preview');
+  if(!p)return;
+  document.getElementById('modal-img').src=src;
+  p.style.display='block';
+}
+
+function clearModalImg(){window._modalImg='';const p=document.getElementById('modal-img-preview');if(p)p.style.display='none'}
+
+function modalSave(){
+  const title=(document.getElementById('mf-title')||{}).value||'';
+  if(!title&&modalType!=='gallery-item'){toast('يرجى إدخال العنوان','err');return}
+
+  const item={
+    id:Date.now(),
+    title,
+    desc:(document.getElementById('mf-desc')||{}).value||'',
+    icon:(document.getElementById('mf-icon')||{}).value||'',
+    isbn:(document.getElementById('mf-isbn')||{}).value||'',
+    year:(document.getElementById('mf-year')||{}).value||'',
+    provider:(document.getElementById('mf-provider')||{}).value||'',
+    url:(document.getElementById('mf-url')||{}).value||'',
+    caption:(document.getElementById('mf-caption')||{}).value||'',
+    img:window._modalImg||'',
+    category:(document.getElementById('mf-cat')||{}).value||'stem'
+  };
+
+  if(modalType==='innovation'){
+    const cat=(document.getElementById('mf-cat')||{}).value||modalCat||'stem';
+    if(!data.innovations)data.innovations={stem:[],robotics:[],games:[],platforms:[]};
+    if(!data.innovations[cat])data.innovations[cat]=[];
+    if(modalIndex>=0&&modalCat)data.innovations[modalCat].splice(modalIndex,1,item);
+    else data.innovations[cat].push(item);
+    renderList('innovations');
+  } else {
+    const key=modalType==='gallery-item'?'gallery':modalType+'s';
+    if(!data[key])data[key]=[];
+    if(modalIndex>=0)data[key].splice(modalIndex,1,item);
+    else data[key].push(item);
+    renderList(key);
+    const c=document.getElementById(`${key}-count`);
+    if(c)c.textContent=data[key].length;
+  }
+
+  localStorage.setItem(DATA_KEY,JSON.stringify(data));
+  renderDash();
+  document.getElementById('modal-bg').classList.remove('open');
+  toast(`✓ تم ${modalIndex>=0?'التعديل':'الإضافة'} بنجاح`);
+  window._modalImg='';
+}
+
+// ── TOAST ────────────────────────────────────────────
+let toastTimer;
+function toast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast'+(type==='err'?' err':'');
+  clearTimeout(toastTimer);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('show')));
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── INIT ────────────────────────────────────────────
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+// Auto-login check (session in sessionStorage)
+if(sessionStorage.getItem('zeytoon_auth')==='1'){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='flex';
+  loadAll();
+}
+function doLogin(){
+  const v=document.getElementById('pass-inp').value;
+  if(v===getPass()){
+    sessionStorage.setItem('zeytoon_auth','1');
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='flex';
+    loadAll();
+  }else{
+    const err=document.getElementById('login-err');
+    err.style.display='block';
+    document.getElementById('pass-inp').value='';
+    setTimeout(()=>err.style.display='none',3000);
+  }
+}
+function doLogout(){
+  sessionStorage.removeItem('zeytoon_auth');
+  document.getElementById('app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('pass-inp').value='';
+}
+</script>
+</body>
+</html>

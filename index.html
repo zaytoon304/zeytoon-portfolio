@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>محمد محمود السيد زيتون — مشرف أكاديمي للتطوير والموهبة والروبوت</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:hsl(220 13% 5%);
+  --bg2:hsl(220 11% 8%);
+  --bg3:hsl(220 10% 12%);
+  --gold:hsl(43 96% 56%);
+  --gold-dim:hsl(43 72% 38%);
+  --gold-glow:hsl(43 100% 66%);
+  --gold-sub:hsl(43 50% 12%);
+  --text:hsl(45 20% 92%);
+  --muted:hsl(220 8% 62%);
+  --faint:hsl(220 6% 40%);
+  --border:hsl(220 15% 18%);
+  --border-g:hsl(43 55% 32%);
+  --r:16px;--r-sm:10px;--r-lg:24px;
+  --font:'Tajawal',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.8;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font-family:var(--font);cursor:pointer;border:none;background:none}
+
+/* Layout */
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.sec{padding:96px 0}
+.sec-alt{background:var(--bg2)}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+/* Typography */
+.label{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.label::before{content:'';display:block;width:24px;height:2px;background:var(--gold)}
+.h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:900;line-height:1.25;margin-bottom:14px}
+.h2{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;line-height:1.3;margin-bottom:14px}
+.h2 span,.h1 span{color:var(--gold)}
+.desc{font-size:1.05rem;color:var(--muted);max-width:620px;line-height:2}
+.sec-head{margin-bottom:56px}
+
+/* Buttons */
+.btn-p{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;border-radius:12px;background:var(--gold);color:hsl(43 50% 8%);font-weight:700;font-size:1rem;transition:all .25s;box-shadow:0 8px 32px hsl(43 96% 56%/.32)}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 16px 48px hsl(43 96% 56%/.5)}
+.btn-o{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;border-radius:12px;border:1.5px solid var(--border-g);color:var(--text);font-weight:500;font-size:1rem;transition:all .25s}
+.btn-o:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px)}
+
+/* ── NAV ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;height:72px;background:hsl(220 13% 5%/.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:background .3s}
+.nav.scrolled{background:hsl(220 13% 5%/.98)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:100%}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 8px var(--gold)}50%{box-shadow:0 0 22px var(--gold),0 0 44px var(--gold-dim)}}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{padding:8px 13px;border-radius:8px;font-size:.88rem;font-weight:500;color:var(--muted);transition:all .2s}
+.nav-links a:hover{color:var(--gold);background:var(--gold-sub)}
+.nav-cta{padding:10px 22px;border-radius:10px;background:var(--gold);color:hsl(43 50% 8%);font-weight:700;font-size:.9rem;transition:all .2s}
+.nav-cta:hover{background:var(--gold-glow);transform:translateY(-1px)}
+.menu-btn{display:none;color:var(--text);font-size:1.4rem;width:42px;height:42px;border-radius:10px;border:1px solid var(--border);align-items:center;justify-content:center}
+.nav-wrap{display:flex;align-items:center;gap:8px}
+@media(max-width:900px){
+  .nav-links-wrap{display:none}
+  .nav-links-wrap.open{display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:16px;gap:4px}
+  .nav-links-wrap.open .nav-links{flex-direction:column;width:100%}
+  .nav-links-wrap.open .nav-links a{width:100%;text-align:right;padding:12px 16px;border-radius:10px}
+  .menu-btn{display:flex}
+}
+
+/* ── HERO ── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;overflow:hidden}
+#hero-canvas{position:absolute;inset:0;z-index:0}
+.hero-in{position:relative;z-index:2;display:grid;grid-template-columns:1fr 380px;gap:80px;align-items:center}
+@media(max-width:900px){.hero-in{grid-template-columns:1fr;text-align:center;gap:48px}}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.8rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);background:var(--gold-sub);padding:9px 18px;border-radius:100px;border:1px solid var(--border-g);margin-bottom:22px}
+.hero-name{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;line-height:1.2;margin-bottom:8px}
+.hero-name .g{color:var(--gold)}
+.hero-title{font-size:clamp(1rem,2.5vw,1.3rem);font-weight:500;color:var(--gold-dim);margin-bottom:20px}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:560px;line-height:2;margin-bottom:36px}
+@media(max-width:900px){.hero-desc{margin:0 auto 36px}}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:900px){.hero-btns{justify-content:center}}
+
+/* Hero Photo */
+.photo-wrap{position:relative;display:flex;align-items:center;justify-content:center}
+.photo-ring1{position:absolute;inset:-16px;border-radius:50%;border:2px dashed hsl(43 60% 35%/.45);animation:spin 22s linear infinite}
+.photo-ring2{position:absolute;inset:-34px;border-radius:50%;border:1px dashed hsl(43 60% 35%/.2);animation:spin 35s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.photo-frame{position:relative;width:320px;height:320px;border-radius:50%;overflow:hidden;border:4px solid var(--gold);box-shadow:0 0 60px hsl(43 96% 56%/.22),0 0 120px hsl(43 96% 56%/.1)}
+@media(max-width:600px){.photo-frame{width:240px;height:240px}}
+.photo-frame img{width:100%;height:100%;object-fit:cover;object-position:top}
+.photo-ph{width:100%;height:100%;background:var(--gold-sub);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--gold)}
+.photo-ph svg{width:64px;height:64px;opacity:.6}
+.photo-ph span{font-size:.85rem;font-weight:700}
+.hero-badge-row{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);display:flex;gap:8px;white-space:nowrap}
+.badge{background:var(--bg3);border:1px solid var(--border-g);border-radius:100px;padding:7px 16px;font-size:.75rem;font-weight:700;color:var(--gold)}
+
+/* ── STATS ── */
+.stats-bar{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-in{display:grid;grid-template-columns:repeat(4,1fr)}
+@media(max-width:600px){.stats-in{grid-template-columns:repeat(2,1fr)}}
+.stat{text-align:center;padding:36px 20px;border-inline-end:1px solid var(--border)}
+.stat:last-child{border-inline-end:none}
+.stat-n{font-size:2.8rem;font-weight:900;color:var(--gold);line-height:1;display:block}
+.stat-l{font-size:.88rem;color:var(--muted);margin-top:8px}
+
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1fr 380px;gap:64px;align-items:start}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr}}
+.about-text{font-size:1.02rem;color:var(--muted);line-height:2;margin-bottom:28px}
+.hi-cards{display:grid;gap:14px;margin-top:8px}
+.hi-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;display:flex;align-items:center;gap:14px;transition:all .3s}
+.hi-card:hover{border-color:var(--border-g);transform:translateX(-4px)}
+.hi-ico{font-size:1.7rem;flex-shrink:0}
+.hi-card h4{font-size:.92rem;font-weight:700;margin-bottom:3px}
+.hi-card p{font-size:.83rem;color:var(--muted)}
+
+/* Timeline */
+.tl{display:flex;flex-direction:column}
+.tl-item{position:relative;padding:0 0 28px 30px;border-inline-start:2px solid var(--border)}
+.tl-item:last-child{border-inline-start-color:transparent}
+.tl-dot{position:absolute;top:4px;inset-inline-start:-7px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--gold)}
+.tl-yr{font-size:.75rem;color:var(--gold);font-weight:700;margin-bottom:4px}
+.tl-title{font-size:.92rem;font-weight:700;margin-bottom:4px}
+.tl-desc{font-size:.82rem;color:var(--muted)}
+
+/* ── BOOKS ── */
+.book-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all .3s;display:flex;flex-direction:column}
+.book-card:hover{border-color:var(--border-g);transform:translateY(-6px);box-shadow:0 20px 60px hsl(43 96% 56%/.15)}
+.book-cover{width:100%;aspect-ratio:3/4;max-height:280px;background:linear-gradient(135deg,var(--gold-sub),var(--bg3));display:flex;align-items:center;justify-content:center;font-size:4rem;overflow:hidden}
+.book-cover img{width:100%;height:100%;object-fit:cover}
+.book-body{padding:24px;flex:1}
+.book-body h3{font-size:1.1rem;font-weight:800;margin-bottom:8px}
+.book-isbn{font-size:.73rem;color:var(--gold);background:var(--gold-sub);display:inline-block;padding:3px 10px;border-radius:100px;margin-bottom:10px;font-weight:700}
+.book-body p{font-size:.88rem;color:var(--muted)}
+
+/* ── PROGRAMS ── */
+.prog-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:30px 26px;transition:all .3s;position:relative;overflow:hidden}
+.prog-card::before{content:'';position:absolute;top:0;inset-inline-end:0;inset-inline-start:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold));transform:scaleX(0);transform-origin:right;transition:transform .35s}
+.prog-card:hover::before{transform:scaleX(1)}
+.prog-card:hover{border-color:var(--border-g);transform:translateY(-4px)}
+.prog-ico{width:56px;height:56px;border-radius:14px;background:var(--gold-sub);border:1px solid var(--border-g);display:flex;align-items:center;justify-content:center;font-size:1.7rem;margin-bottom:18px}
+.prog-card h3{font-size:1.05rem;font-weight:800;margin-bottom:10px}
+.prog-card p{font-size:.88rem;color:var(--muted);line-height:1.8}
+
+/* ── COURSES ── */
+.course-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all .3s;display:flex;flex-direction:column}
+.course-card:hover{border-color:var(--border-g);transform:translateY(-4px)}
+.course-thumb{width:100%;aspect-ratio:16/9;background:var(--gold-sub);display:flex;align-items:center;justify-content:center;font-size:2.5rem;overflow:hidden}
+.course-thumb img{width:100%;height:100%;object-fit:cover}
+.course-body{padding:18px;flex:1}
+.course-prov{font-size:.72rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.course-body h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.course-yr{font-size:.8rem;color:var(--faint)}
+
+/* ── ACHIEVEMENTS ── */
+.ach-list{display:flex;flex-direction:column;gap:20px}
+.ach-item{display:flex;gap:20px;align-items:flex-start}
+.ach-yr-col{flex-shrink:0;width:76px;display:flex;flex-direction:column;align-items:center}
+.ach-yr{font-size:.82rem;font-weight:800;color:var(--gold);background:var(--gold-sub);border:1px solid var(--border-g);border-radius:8px;padding:5px 10px;text-align:center;width:100%}
+.ach-line{flex:1;width:2px;background:var(--border);margin-top:6px}
+.ach-card{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;display:flex;gap:14px;align-items:flex-start;transition:all .3s}
+.ach-card:hover{border-color:var(--border-g)}
+.ach-ico{font-size:1.4rem;flex-shrink:0}
+.ach-card h3{font-size:.95rem;font-weight:700;margin-bottom:5px}
+.ach-card p{font-size:.84rem;color:var(--muted)}
+
+/* ── GALLERY ── */
+.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:900px){.gal-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.gal-grid{grid-template-columns:repeat(2,1fr)}}
+.gal-item{position:relative;aspect-ratio:1;border-radius:var(--r-sm);overflow:hidden;cursor:pointer;background:var(--bg3);border:1px solid var(--border)}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.gal-item:hover img{transform:scale(1.08)}
+.gal-ov{position:absolute;inset:0;background:hsl(220 13% 5%/.6);display:flex;align-items:flex-end;padding:10px;opacity:0;transition:opacity .3s}
+.gal-item:hover .gal-ov{opacity:1}
+.gal-cap{font-size:.73rem;color:#fff;font-weight:500}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:999;background:hsl(220 13% 3%/.96);display:none;align-items:center;justify-content:center;padding:24px}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90vw;max-height:90vh;border-radius:var(--r);object-fit:contain}
+.lb-close{position:absolute;top:24px;left:24px;width:48px;height:48px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-size:1.4rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:1000}
+.lb-close:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── VIDEOS ── */
+.vid-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all .3s}
+.vid-card:hover{border-color:var(--border-g);transform:translateY(-4px)}
+.vid-thumb{position:relative;width:100%;aspect-ratio:16/9;background:var(--gold-sub);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.vid-thumb img{width:100%;height:100%;object-fit:cover}
+.vid-play{position:absolute;width:60px;height:60px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;color:hsl(43 50% 8%);font-size:1.4rem;transition:all .25s;box-shadow:0 8px 30px hsl(43 96% 56%/.5)}
+.vid-card:hover .vid-play{transform:scale(1.12)}
+.vid-body{padding:18px}
+.vid-body h3{font-size:.95rem;font-weight:700}
+
+/* ── INNOVATIONS ── */
+.inn-tabs{display:flex;gap:8px;margin-bottom:36px;flex-wrap:wrap}
+.tab-btn{padding:10px 22px;border-radius:100px;border:1.5px solid var(--border);color:var(--muted);font-size:.88rem;font-weight:600;transition:all .25s;cursor:pointer;font-family:var(--font)}
+.tab-btn.active{background:var(--gold);border-color:var(--gold);color:hsl(43 50% 8%)}
+.tab-btn:hover:not(.active){border-color:var(--border-g);color:var(--gold)}
+.tab-panel{display:none}
+.tab-panel.active{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){.tab-panel.active{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.tab-panel.active{grid-template-columns:1fr}}
+.inn-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all .3s}
+.inn-card:hover{border-color:var(--border-g);transform:translateY(-4px)}
+.inn-img{width:100%;aspect-ratio:16/9;background:var(--gold-sub);display:flex;align-items:center;justify-content:center;font-size:2.5rem;overflow:hidden}
+.inn-img img{width:100%;height:100%;object-fit:cover}
+.inn-body{padding:18px}
+.inn-body h3{font-size:.95rem;font-weight:700;margin-bottom:7px}
+.inn-body p{font-size:.84rem;color:var(--muted)}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
+.contact-items{display:flex;flex-direction:column;gap:14px}
+.contact-item{display:flex;align-items:center;gap:14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;transition:all .3s}
+.contact-item:hover{border-color:var(--border-g)}
+.contact-ico{width:46px;height:46px;border-radius:12px;background:var(--gold-sub);border:1px solid var(--border-g);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.contact-lbl{font-size:.75rem;color:var(--faint);margin-bottom:2px}
+.contact-val{font-size:.95rem;font-weight:700}
+
+/* CTA Box */
+.cta-box{background:linear-gradient(135deg,var(--gold-sub),var(--bg3));border:1px solid var(--border-g);border-radius:var(--r-lg);padding:40px 36px}
+.cta-box h3{font-size:1.6rem;font-weight:800;margin-bottom:12px}
+.cta-box p{color:var(--muted);margin-bottom:28px;line-height:1.9}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:36px 0;text-align:center}
+.footer-copy{font-size:.82rem;color:var(--faint)}
+.admin-link{display:inline-block;margin-top:14px;font-size:.75rem;color:var(--faint);border-bottom:1px solid transparent;transition:all .2s}
+.admin-link:hover{color:var(--gold);border-color:var(--gold)}
+
+/* Empty state */
+.empty{text-align:center;padding:56px 24px;color:var(--faint);border:1px dashed var(--border);border-radius:var(--r-lg);grid-column:1/-1}
+.empty-ico{font-size:3rem;margin-bottom:14px}
+
+/* ── PLATFORMS ── */
+.platforms-bar{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:40px 0}
+.platforms-label{text-align:center;font-size:.75rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:28px}
+.platforms-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.platform-card{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 24px;border-radius:var(--r);
+  background:var(--bg3);border:1px solid var(--border);
+  transition:all .3s;text-decoration:none;
+  min-width:160px;
+}
+.platform-card:hover{border-color:var(--border-g);transform:translateY(-3px);box-shadow:0 12px 32px hsl(43 96% 56%/.15)}
+.platform-logo{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.platform-info{}
+.platform-name{font-size:.88rem;font-weight:800;display:block}
+.platform-hint{font-size:.72rem;color:var(--muted)}
+.platform-arrow{margin-inline-start:auto;color:var(--gold);font-size:.9rem}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="dot"></span><span>زيتون</span></a>
+    <div class="nav-links-wrap" id="navWrap">
+      <nav class="nav-links">
+        <a href="#about" onclick="closeNav()">نبذة</a>
+        <a href="#books" onclick="closeNav()">مؤلفاتي</a>
+        <a href="#programs" onclick="closeNav()">التطوير</a>
+        <a href="#courses" onclick="closeNav()">الدورات</a>
+        <a href="#achievements" onclick="closeNav()">الإنجازات</a>
+        <a href="#gallery" onclick="closeNav()">الصور</a>
+        <a href="#videos" onclick="closeNav()">الفيديو</a>
+        <a href="#innovations" onclick="closeNav()">الابتكارات</a>
+        <a href="#contact" onclick="closeNav()">تواصل</a>
+      </nav>
+    </div>
+    <div class="nav-wrap">
+      <a class="nav-cta" href="#contact">تواصل معي</a>
+      <button class="menu-btn" id="menuBtn" onclick="toggleNav()" aria-label="القائمة">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <canvas id="hero-canvas"></canvas>
+  <div class="wrap hero-in">
+    <div>
+      <div class="hero-eyebrow" id="hero-eyebrow">✦ مشرف أكاديمي · خبرة +٣١ سنة</div>
+      <h1 class="hero-name" id="hero-name">محمد محمود<br><span class="g">السيد زيتون</span></h1>
+      <p class="hero-title" id="hero-title">مشرف أكاديمي للتطوير والموهبة والروبوت</p>
+      <p class="hero-desc" id="hero-desc">أبني عقولاً وأصنع مبتكرين — أطوّر المدرسة كمنظومةٍ متكاملة من المناهج والمنصات وأنظمة القياس، برؤيةٍ خارج الصندوق. جاهزٌ للتأثير من اليوم الأول.</p>
+      <div class="hero-btns">
+        <a class="btn-p" href="#contact">📞 تواصل معي</a>
+        <a class="btn-o" href="#books">📚 مؤلفاتي</a>
+      </div>
+    </div>
+    <div class="photo-wrap">
+      <div class="photo-ring1"></div>
+      <div class="photo-ring2"></div>
+      <div class="photo-frame" id="hero-photo-frame">
+        <div class="photo-ph" id="photo-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>الصورة الشخصية</span>
+        </div>
+      </div>
+      <div class="hero-badge-row">
+        <span class="badge">🤖 روبوتكس</span>
+        <span class="badge">🧠 موهبة</span>
+        <span class="badge">📚 مؤلف</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="wrap stats-in" id="stats-container">
+    <div class="stat"><span class="stat-n" data-target="31">٠</span><div class="stat-l">سنة خبرة</div></div>
+    <div class="stat"><span class="stat-n" data-target="14">٠</span><div class="stat-l">سنة في السعودية</div></div>
+    <div class="stat"><span class="stat-n" data-target="5">٠</span><div class="stat-l">مؤلفات</div></div>
+    <div class="stat"><span class="stat-n" data-target="100">٠</span><div class="stat-l">طالب موهوب</div></div>
+  </div>
+</div>
+
+<!-- PLATFORMS -->
+<div class="platforms-bar" id="platforms-bar" style="display:none">
+  <div class="wrap">
+    <div class="platforms-label">أُدرِّس على هذه المنصات — اضغط للانتقال لصفحتي</div>
+    <div class="platforms-row" id="platforms-row"></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="sec sec-alt" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="reveal">
+        <span class="label">السيرة الذاتية</span>
+        <h2 class="h2">واحدٌ وثلاثون عامًا في <span>صناعة التميّز</span></h2>
+        <p class="about-text" id="about-bio">رحلةٌ في التدريس تمتدّ لنحو ٣١ عامًا، منها ١٤ عامًا في المملكة العربية السعودية. بدأت معلمًا وتدرّجت حتى أصبحت مشرفًا في مجالي الموهبة والروبوت. خلال هذه المسيرة بنيت فرقًا للمسابقات، وطوّرت مناهج إثرائية، وأطلقت مشاريع تقنية، وألّفت كتبًا متخصصة موثّقة.</p>
+        <div class="hi-cards" id="about-highlights">
+          <div class="hi-card"><span class="hi-ico">🎓</span><div><h4>المؤهل العلمي</h4><p>تعليم — جامعة المنصورة</p></div></div>
+          <div class="hi-card"><span class="hi-ico">🏫</span><div><h4>الموقع الحالي</h4><p>مشرف موهبة وروبوت — المملكة العربية السعودية</p></div></div>
+          <div class="hi-card"><span class="hi-ico">🏆</span><div><h4>الاعتمادات</h4><p>شهادات مايكروسوفت ودورات تدريبية متخصصة</p></div></div>
+          <div class="hi-card"><span class="hi-ico">📚</span><div><h4>المؤلفات</h4><p>كتب منشورة بردمك رسمي في الروبوت والحساب الذهني</p></div></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:24px;color:var(--gold)">المسيرة المهنية</h3>
+        <div class="tl" id="career-timeline">
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-yr">2010 – الآن</div><div class="tl-title">مشرف أكاديمي للموهبة والروبوت</div><div class="tl-desc">المملكة العربية السعودية</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-yr">2010 – 2024</div><div class="tl-title">بناء فرق المسابقات الروبوتية</div><div class="tl-desc">WRO وبطولات دولية</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-yr">2005 – 2010</div><div class="tl-title">معلم ومطوّر مناهج</div><div class="tl-desc">مصر</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-yr">1993</div><div class="tl-title">بداية المسيرة التعليمية</div><div class="tl-desc">معلم أول — مصر</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="sec" id="books">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">مؤلفاتي</span>
+      <h2 class="h2">كتبٌ منشورة <span>وموثّقة رسميًا</span></h2>
+      <p class="desc">أعمالٌ مرجعية برقم إيداع دولي (ردمك) — دليلٌ على عطاءٍ يتجاوز الفصل الدراسي.</p>
+    </div>
+    <div class="g3" id="books-container"></div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="sec sec-alt" id="programs">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">برامج التطوير</span>
+      <h2 class="h2">أطوّر المدرسة <span>لا أكتفي بالتدريس</span></h2>
+      <p class="desc">رؤيةٌ شاملة لتطوير المنظومة التعليمية من الداخل — مناهجَ ومنصاتٍ وأنظمة قياس.</p>
+    </div>
+    <div class="g3" id="programs-container"></div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section class="sec" id="courses">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">الدورات والشهادات</span>
+      <h2 class="h2">تعلّمٌ مستمر <span>وتطوير دائم</span></h2>
+      <p class="desc">دوراتٌ احترافية وشهاداتٌ معتمدة تُعزّز الكفاءة والخبرة.</p>
+    </div>
+    <div class="g4" id="courses-container"></div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section class="sec sec-alt" id="achievements">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">الإنجازات</span>
+      <h2 class="h2">محطاتٌ من <span>التميّز والعطاء</span></h2>
+      <p class="desc">إنجازاتٌ حقيقية وأثرٌ ملموس في مسيرة بناء الأجيال.</p>
+    </div>
+    <div class="ach-list" id="achievements-container"></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="sec" id="gallery">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">معرض الصور</span>
+      <h2 class="h2">لحظاتٌ من <span>مسيرة العطاء</span></h2>
+    </div>
+    <div class="gal-grid" id="gallery-container"></div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section class="sec sec-alt" id="videos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">الفيديوهات</span>
+      <h2 class="h2">أعمالٌ <span>بالصوت والصورة</span></h2>
+    </div>
+    <div class="g3" id="videos-container"></div>
+  </div>
+</section>
+
+<!-- INNOVATIONS -->
+<section class="sec" id="innovations">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">الابتكارات</span>
+      <h2 class="h2">ابتكاراتٌ <span>تصنع المستقبل</span></h2>
+      <p class="desc">مشاريعٌ ريادية في STEM والروبوت والألعاب التعليمية والمنصات الرقمية.</p>
+    </div>
+    <div class="inn-tabs">
+      <button class="tab-btn active" onclick="switchTab('stem',this)">🔬 STEM</button>
+      <button class="tab-btn" onclick="switchTab('robotics',this)">🤖 روبوت</button>
+      <button class="tab-btn" onclick="switchTab('games',this)">🎮 ألعاب</button>
+      <button class="tab-btn" onclick="switchTab('platforms',this)">🖥 منصات</button>
+    </div>
+    <div class="tab-panel active" id="tab-stem"></div>
+    <div class="tab-panel" id="tab-robotics"></div>
+    <div class="tab-panel" id="tab-games"></div>
+    <div class="tab-panel" id="tab-platforms"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec sec-alt" id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">تواصل</span>
+      <h2 class="h2">هل تريد <span>التعاون؟</span></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-items reveal" id="contact-container">
+        <div class="contact-item"><span class="contact-ico">📧</span><div><div class="contact-lbl">البريد الإلكتروني</div><div class="contact-val" id="c-email">zaytoon304@gmail.com</div></div></div>
+        <div class="contact-item"><span class="contact-ico">📱</span><div><div class="contact-lbl">واتساب</div><div class="contact-val" id="c-whatsapp">اضغط للتواصل</div></div></div>
+        <div class="contact-item"><span class="contact-ico">🌍</span><div><div class="contact-lbl">الموقع</div><div class="contact-val" id="c-location">المملكة العربية السعودية</div></div></div>
+      </div>
+      <div class="cta-box reveal">
+        <h3>جاهزٌ للتأثير من اليوم الأول</h3>
+        <p>إذا كنت تبحث عن مشرفٍ أكاديمي يحمل رؤيةً شاملة للتطوير والابتكار — فلا تتردد في التواصل.</p>
+        <a class="btn-p" href="mailto:zaytoon304@gmail.com">📩 أرسل رسالة</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-copy">© 2025 محمد محمود السيد زيتون — جميع الحقوق محفوظة</div>
+    <a class="admin-link" href="admin.html">⚙ لوحة التحكم</a>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────
+const DEFAULT = {
+  site:{
+    name:'محمد محمود السيد زيتون',
+    title:'مشرف أكاديمي للتطوير والموهبة والروبوت',
+    bio:'رحلةٌ في التدريس تمتدّ لنحو ٣١ عامًا، منها ١٤ عامًا في المملكة العربية السعودية. بدأت معلمًا وتدرّجت حتى أصبحت مشرفًا في مجالي الموهبة والروبوت.',
+    photo:'',
+    email:'zaytoon304@gmail.com',
+    whatsapp:'',
+    location:'المملكة العربية السعودية',
+    platforms:{rwaq:'https://www.rwaq.org/users/mzaytoon303-20200421200302/'}
+  },
+  books:[
+    {id:1,title:'الروبوت للمبتدئين',isbn:'978-...',desc:'مرجعٌ شامل لتعليم الروبوتكس لطلاب المرحلة الابتدائية والمتوسطة.',img:''},
+    {id:2,title:'الحساب الذهني',isbn:'978-...',desc:'منهجيةٌ مبتكرة تحوّل الأرقام إلى مهارةٍ حياتية لا مسألةً مدرسية.',img:''},
+    {id:3,title:'تعليم الموهوبين',isbn:'978-...',desc:'دليلٌ للمعلمين في اكتشاف الموهوبين ورعايتهم برامجَ إثرائية فعّالة.',img:''}
+  ],
+  programs:[
+    {id:1,icon:'🤖',title:'روبوتكس وMakeblock',desc:'بناء فرق المسابقات وتأهيلها لبطولات WRO الدولية.'},
+    {id:2,icon:'💡',title:'رعاية الموهوبين',desc:'اكتشاف مبكر للمواهب ورعايتهم ببرامج إثرائية متكاملة.'},
+    {id:3,icon:'🧮',title:'الحساب الذهني',desc:'برنامجٌ يحوّل الأرقام إلى مهارةٍ راسخة بمنهجية مجرّبة.'},
+    {id:4,icon:'🧩',title:'التعليم المتمايز',desc:'تجارب تعلّم مخصّصة تراعي الفروق الفردية بين الطلاب.'},
+    {id:5,icon:'🖥️',title:'المنصات الرقمية',desc:'بناء أدوات ومنصات تخدم الطلاب والمعلمين والإدارة.'},
+    {id:6,icon:'📊',title:'أنظمة القياس',desc:'مؤشراتٌ واضحة لقياس أداء المعلمين والطلاب وتطويره.'}
+  ],
+  courses:[],
+  achievements:[
+    {id:1,year:'2024',icon:'🥇',title:'بطولة WRO الإقليمية',desc:'تأهيل فريق الطلاب للمرحلة الإقليمية في بطولة الروبوت العالمية.'},
+    {id:2,year:'2022',icon:'🏆',title:'جائزة المعلم المتميز',desc:'تقديرٌ رسمي من وزارة التعليم على الإنجازات التعليمية.'},
+    {id:3,year:'2020',icon:'📖',title:'نشر ثلاثة مؤلفات',desc:'إصدار كتب متخصصة في الروبوت والموهبة والحساب الذهني بردمك دولي.'}
+  ],
+  gallery:[],
+  videos:[],
+  innovations:{
+    stem:[{id:1,title:'منهج STEM المتكامل',desc:'منهجيةٌ تدمج العلوم والتقنية والهندسة والرياضيات في مشاريع عملية.',img:''}],
+    robotics:[{id:1,title:'روبوت المتاهة',desc:'روبوتٌ ذكي يحل المتاهات باستخدام حساسات المسافة.',img:''}],
+    games:[{id:1,title:'لعبة الحساب الذهني',desc:'لعبةٌ تفاعلية تنمّي مهارات الحساب الذهني بأسلوبٍ ممتع.',img:''}],
+    platforms:[{id:1,title:'منصة الموهوبين',desc:'منصةٌ رقمية لإدارة برامج رعاية الموهوبين.',img:''}]
+  }
+};
+
+function getData(){
+  try{
+    const raw=localStorage.getItem('zeytoon_data');
+    if(!raw) return DEFAULT;
+    const saved=JSON.parse(raw);
+    // دمج المنصات تلقائياً إذا كانت مفقودة
+    if(!saved.site) saved.site={};
+    if(!saved.site.platforms) saved.site.platforms={};
+    if(!saved.site.platforms.rwaq)
+      saved.site.platforms.rwaq='https://www.rwaq.org/users/mzaytoon303-20200421200302/';
+    return saved;
+  }catch(e){return DEFAULT}
+}
+
+// ── RENDER ─────────────────────────────────────────
+const PLATFORM_META={
+  rwaq:    {name:'رواق',       hint:'دوراتي على رواق',    logo:'🟢', bg:'hsl(145 55% 15%)'},
+  edraak:  {name:'إدراك',      hint:'دوراتي على إدراك',   logo:'🔵', bg:'hsl(210 55% 15%)'},
+  udemy:   {name:'Udemy',      hint:'دوراتي على Udemy',   logo:'🟣', bg:'hsl(270 45% 15%)'},
+  youtube: {name:'يوتيوب',     hint:'قناتي على يوتيوب',   logo:'🔴', bg:'hsl(0 55% 15%)'},
+  linkedin:{name:'LinkedIn',   hint:'ملفي على لينكد إن',  logo:'🔷', bg:'hsl(210 60% 14%)'},
+  coursera:{name:'Coursera',   hint:'دوراتي على كورسيرا', logo:'🔹', bg:'hsl(200 55% 14%)'},
+  other1:  {name:'',           hint:'منصة أخرى',          logo:'🌐', bg:'hsl(220 10% 14%)'},
+  other2:  {name:'',           hint:'منصة أخرى',          logo:'🌐', bg:'hsl(220 10% 14%)'},
+};
+
+function render(){
+  const d=getData();
+  renderSite(d.site);
+  renderPlatforms(d.site||{});
+  renderBooks(d.books||[]);
+  renderPrograms(d.programs||[]);
+  renderCourses(d.courses||[]);
+  renderAchievements(d.achievements||[]);
+  renderGallery(d.gallery||[]);
+  renderVideos(d.videos||[]);
+  renderInnovations(d.innovations||{stem:[],robotics:[],games:[],platforms:[]});
+  renderContact(d.site);
+}
+
+function renderPlatforms(site){
+  const links=site.platforms||{};
+  const keys=Object.keys(PLATFORM_META);
+  const active=keys.filter(k=>{
+    if(k==='other1'||k==='other2') return links[k]&&links[`${k}_name`];
+    return links[k];
+  });
+  const bar=document.getElementById('platforms-bar');
+  const row=document.getElementById('platforms-row');
+  if(!active.length){bar.style.display='none';return}
+  bar.style.display='block';
+  row.innerHTML=active.map(k=>{
+    const m=PLATFORM_META[k];
+    const name=(k==='other1'||k==='other2')?(links[`${k}_name`]||m.name):m.name;
+    const url=links[k];
+    return`<div class="platform-card" onclick="window.open('${url}','_blank')" style="cursor:pointer">
+      <div class="platform-logo" style="background:${m.bg}">${m.logo}</div>
+      <div class="platform-info">
+        <span class="platform-name">${name}</span>
+        <span class="platform-hint">${m.hint}</span>
+      </div>
+      <span class="platform-arrow">←</span>
+    </div>`;
+  }).join('');
+}
+
+function renderSite(s){
+  if(!s)return;
+  if(s.photo){
+    const frame=document.getElementById('hero-photo-frame');
+    frame.innerHTML=`<img src="${s.photo}" alt="${s.name}">`;
+  }
+  if(s.bio) document.getElementById('about-bio').textContent=s.bio;
+}
+
+function renderContact(s){
+  if(!s)return;
+  if(s.email) document.getElementById('c-email').textContent=s.email;
+  if(s.location) document.getElementById('c-location').textContent=s.location;
+  if(s.whatsapp) document.getElementById('c-whatsapp').textContent=s.whatsapp;
+}
+
+function renderBooks(books){
+  const c=document.getElementById('books-container');
+  if(!books.length){c.innerHTML=emptyState('📚','أضف مؤلفاتك من لوحة التحكم');return}
+  c.innerHTML=books.map(b=>`
+    <div class="book-card reveal">
+      <div class="book-cover">${b.img?`<img src="${b.img}" alt="${b.title}">`:bookIcon()}</div>
+      <div class="book-body">
+        <h3>${b.title}</h3>
+        ${b.isbn?`<div class="book-isbn">ISBN: ${b.isbn}</div>`:''}
+        <p>${b.desc||''}</p>
+      </div>
+    </div>`).join('');
+  reReveal();
+}
+
+function bookIcon(){return`<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="hsl(43 96% 56%)" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>`}
+
+function renderPrograms(progs){
+  const c=document.getElementById('programs-container');
+  if(!progs.length){c.innerHTML=emptyState('💡','أضف برامج التطوير من لوحة التحكم');return}
+  c.innerHTML=progs.map(p=>`
+    <div class="prog-card reveal">
+      <div class="prog-ico">${p.icon||'📌'}</div>
+      <h3>${p.title}</h3>
+      <p>${p.desc||''}</p>
+    </div>`).join('');
+  reReveal();
+}
+
+function renderCourses(courses){
+  const c=document.getElementById('courses-container');
+  if(!courses.length){c.innerHTML=emptyState('🎓','أضف الدورات والشهادات من لوحة التحكم');return}
+  c.innerHTML=courses.map(co=>`
+    <div class="course-card reveal">
+      <div class="course-thumb">${co.img?`<img src="${co.img}" alt="${co.title}">`:certificateIcon()}</div>
+      <div class="course-body">
+        <div class="course-prov">${co.provider||''}</div>
+        <h3>${co.title}</h3>
+        <div class="course-yr">${co.year||''}</div>
+      </div>
+    </div>`).join('');
+  reReveal();
+}
+
+function certificateIcon(){return`<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="hsl(43 96% 56%)" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>`}
+
+function renderAchievements(achs){
+  const c=document.getElementById('achievements-container');
+  if(!achs.length){c.innerHTML=`<div class="empty"><div class="empty-ico">🏆</div>أضف إنجازاتك من لوحة التحكم</div>`;return}
+  c.innerHTML=achs.map(a=>`
+    <div class="ach-item reveal">
+      <div class="ach-yr-col"><div class="ach-yr">${a.year||'—'}</div><div class="ach-line"></div></div>
+      <div class="ach-card"><span class="ach-ico">${a.icon||'⭐'}</span><div><h3>${a.title}</h3><p>${a.desc||''}</p></div></div>
+    </div>`).join('');
+  reReveal();
+}
+
+function renderGallery(imgs){
+  const c=document.getElementById('gallery-container');
+  if(!imgs.length){c.innerHTML=emptyState('🖼','أضف الصور من لوحة التحكم');return}
+  c.innerHTML=imgs.map((img,i)=>`
+    <div class="gal-item" onclick="openLightbox('${img.img}')">
+      <img src="${img.img}" alt="${img.caption||''}">
+      <div class="gal-ov"><span class="gal-cap">${img.caption||''}</span></div>
+    </div>`).join('');
+}
+
+function renderVideos(vids){
+  const c=document.getElementById('videos-container');
+  if(!vids.length){c.innerHTML=emptyState('🎬','أضف الفيديوهات من لوحة التحكم');return}
+  c.innerHTML=vids.map(v=>{
+    const yt=v.url&&v.url.includes('youtube')?v.url.replace('watch?v=','embed/'):'';
+    return`<div class="vid-card reveal" onclick="${yt?`openVideo('${yt}')`:''}" style="cursor:${yt?'pointer':'default'}">
+      <div class="vid-thumb">
+        ${v.img?`<img src="${v.img}" alt="${v.title}">`:''}
+        <div class="vid-play">▶</div>
+      </div>
+      <div class="vid-body"><h3>${v.title}</h3></div>
+    </div>`;
+  }).join('');
+  reReveal();
+}
+
+function renderInnovations(inn){
+  ['stem','robotics','games','platforms'].forEach(cat=>{
+    const items=inn[cat]||[];
+    const c=document.getElementById(`tab-${cat}`);
+    if(!items.length){c.innerHTML=emptyState('🔬','أضف الابتكارات من لوحة التحكم');return}
+    c.innerHTML=items.map(i=>`
+      <div class="inn-card reveal">
+        <div class="inn-img">${i.img?`<img src="${i.img}" alt="${i.title}">`:catIcon(cat)}</div>
+        <div class="inn-body"><h3>${i.title}</h3><p>${i.desc||''}</p></div>
+      </div>`).join('');
+  });
+  reReveal();
+}
+
+function catIcon(cat){
+  const icons={stem:'🔬',robotics:'🤖',games:'🎮',platforms:'🖥'};
+  return`<span style="font-size:2.5rem">${icons[cat]||'💡'}</span>`;
+}
+
+function emptyState(icon,msg){return`<div class="empty"><div class="empty-ico">${icon}</div>${msg}</div>`}
+
+// ── TABS ──────────────────────────────────────────
+function switchTab(cat, btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(`tab-${cat}`).classList.add('active');
+}
+
+// ── LIGHTBOX ──────────────────────────────────────
+function openLightbox(src){
+  document.getElementById('lb-img').src=src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(e){
+  if(e&&e.target!==document.getElementById('lightbox')&&!e.target.classList.contains('lb-close'))return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// Video overlay
+let videoOverlay=null;
+function openVideo(url){
+  if(videoOverlay){videoOverlay.remove()}
+  videoOverlay=document.createElement('div');
+  videoOverlay.style.cssText='position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:24px';
+  videoOverlay.innerHTML=`<div style="position:relative;width:100%;max-width:860px;aspect-ratio:16/9"><iframe src="${url}?autoplay=1" style="width:100%;height:100%;border:none;border-radius:16px" allowfullscreen></iframe><button onclick="this.closest('div').parentElement.parentElement.remove()" style="position:absolute;top:-20px;right:-20px;width:40px;height:40px;border-radius:50%;background:#333;border:1px solid #555;color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button></div>`;
+  videoOverlay.addEventListener('click',e=>{if(e.target===videoOverlay)videoOverlay.remove()});
+  document.body.appendChild(videoOverlay);
+}
+
+// ── NAV ──────────────────────────────────────────
+function toggleNav(){document.getElementById('navWrap').classList.toggle('open')}
+function closeNav(){document.getElementById('navWrap').classList.remove('open')}
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
+});
+
+// ── COUNTERS ──────────────────────────────────────
+function animateCounters(){
+  document.querySelectorAll('.stat-n[data-target]').forEach(el=>{
+    const target=+el.dataset.target;
+    const dur=1800; const step=dur/60;
+    let current=0;
+    const inc=target/60;
+    const timer=setInterval(()=>{
+      current=Math.min(current+inc,target);
+      el.textContent=Math.round(current).toString().replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d])+'+';
+      if(current>=target){el.textContent=target.toString().replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d])+'+';clearInterval(timer)}
+    },step);
+  });
+}
+
+// ── REVEAL ──────────────────────────────────────
+function reReveal(){
+  document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
+    if(el.getBoundingClientRect().top<window.innerHeight*0.9) el.classList.add('in');
+  });
+}
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in')}});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Counter trigger on stats visible
+const statsObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){animateCounters();statsObs.disconnect()}
+},{threshold:.5});
+statsObs.observe(document.querySelector('.stats-bar'));
+
+// ── HERO CANVAS PARTICLES ──────────────────────────
+(function(){
+  const canvas=document.getElementById('hero-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,particles=[];
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight}
+  resize();window.addEventListener('resize',resize);
+
+  class P{
+    constructor(){this.reset()}
+    reset(){
+      this.x=Math.random()*W;this.y=Math.random()*H;
+      this.vx=(Math.random()-.5)*.45;this.vy=(Math.random()-.5)*.45;
+      this.a=Math.random()*.45+.08;this.r=Math.random()*1.8+.6;
+    }
+    step(){
+      this.x+=this.vx;this.y+=this.vy;
+      if(this.x<0||this.x>W)this.vx*=-1;
+      if(this.y<0||this.y>H)this.vy*=-1;
+    }
+    draw(){
+      ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(212,175,55,${this.a})`;ctx.fill();
+    }
+  }
+  for(let i=0;i<80;i++) particles.push(new P());
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<particles.length;i++){
+      particles[i].step();particles[i].draw();
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x;const dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<110){
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(212,175,55,${.18*(1-dist/110)})`;ctx.lineWidth=.8;ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── INIT ──────────────────────────────────────────
+render();
+window.addEventListener('scroll',reReveal);
+</script>
+</body>
+</html>
