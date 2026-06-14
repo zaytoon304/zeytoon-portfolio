@@ -327,8 +327,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:36px 0;t
       <p class="hero-title" id="hero-title">مشرف أكاديمي للتطوير والموهبة والروبوت</p>
       <p class="hero-desc" id="hero-desc">أبني عقولاً وأصنع مبتكرين — أطوّر المدرسة كمنظومةٍ متكاملة من المناهج والمنصات وأنظمة القياس، برؤيةٍ خارج الصندوق. جاهزٌ للتأثير من اليوم الأول.</p>
       <div class="hero-btns">
-        <a class="btn-p" href="#contact">📞 تواصل معي</a>
-        <a class="btn-o" href="#books">📚 مؤلفاتي</a>
+        <a class="btn-p" href="#contact" onclick="event.preventDefault();document.getElementById('contact').scrollIntoView({behavior:'smooth'})">📞 تواصل معي</a>
+        <a class="btn-o" href="#books" onclick="event.preventDefault();document.getElementById('books').scrollIntoView({behavior:'smooth'})">📚 مؤلفاتي</a>
       </div>
     </div>
     <div class="photo-wrap">
@@ -339,11 +339,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:36px 0;t
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           <span>الصورة الشخصية</span>
         </div>
-      </div>
-      <div class="hero-badge-row">
-        <span class="badge">🤖 روبوتكس</span>
-        <span class="badge">🧠 موهبة</span>
-        <span class="badge">📚 مؤلف</span>
       </div>
     </div>
   </div>
@@ -376,7 +371,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:36px 0;t
         <h2 class="h2">واحدٌ وثلاثون عامًا في <span>صناعة التميّز</span></h2>
         <p class="about-text" id="about-bio">رحلةٌ في التدريس تمتدّ لنحو ٣١ عامًا، منها ١٤ عامًا في المملكة العربية السعودية. بدأت معلمًا وتدرّجت حتى أصبحت مشرفًا في مجالي الموهبة والروبوت. خلال هذه المسيرة بنيت فرقًا للمسابقات، وطوّرت مناهج إثرائية، وأطلقت مشاريع تقنية، وألّفت كتبًا متخصصة موثّقة.</p>
         <div class="hi-cards" id="about-highlights">
-          <div class="hi-card"><span class="hi-ico">🎓</span><div><h4>المؤهل العلمي</h4><p>تعليم — جامعة المنصورة</p></div></div>
+          <div class="hi-card"><span class="hi-ico">🎓</span><div><h4>المؤهلات العلمية</h4><p>ليسانس آداب وتربية — لغة عربية — جامعة الأزهر<br>تمهيدي ماجستير — الجامعة الأمريكية مانيسوتا<br>دبلوم معلمين أزهري</p></div></div>
           <div class="hi-card"><span class="hi-ico">🏫</span><div><h4>الموقع الحالي</h4><p>مشرف موهبة وروبوت — المملكة العربية السعودية</p></div></div>
           <div class="hi-card"><span class="hi-ico">🏆</span><div><h4>الاعتمادات</h4><p>شهادات مايكروسوفت ودورات تدريبية متخصصة</p></div></div>
           <div class="hi-card"><span class="hi-ico">📚</span><div><h4>المؤلفات</h4><p>كتب منشورة بردمك رسمي في الروبوت والحساب الذهني</p></div></div>
