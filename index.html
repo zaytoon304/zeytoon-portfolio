@@ -546,7 +546,7 @@ const DEFAULT = {
   books:[
     {id:1,title:'أردوينو بلا قيود',isbn:'',desc:'مرجعٌ شاملٌ يأخذ بيد القارئ من الصفر حتى الاحتراف في عالم الأردوينو والبرمجة الإلكترونية — مناسبٌ للطلاب والمعلمين والهواة.',img:'',intro:'',dedication:'',content:'',conclusion:''},
     {id:2,title:'الحساب الذهني للجميع',isbn:'',desc:'منهجيةٌ مبتكرة تحوّل الأرقام إلى مهارةٍ راسخة — يُعلّم الكتاب تقنيات الحساب الذهني السريع بأسلوبٍ ممتعٍ ومجرَّب مع الطلاب.',img:'',intro:'',dedication:'',content:'',conclusion:''},
-    {id:3,title:'منهج المشاريع والتفكير الهندسي STEAM',isbn:'',desc:'يتعلم الطالب من خلال هذا المنهج كيف يفكر المهندس ويحل المشكلات باستخدام منهجية STEAM — يجمع العلوم والتقنية والهندسة والفنون والرياضيات في مشروعات واقعية وتجارب عملية. للصف الأول المتوسط.',img:'assets/books/steam-cover.png',intro:'assets/books/steam-intro.png',dedication:'',content:'مشروعات الوحدة الأولى:\n• الاتزان والآلات البسيطة\n• الماء الذكي\n• الطاقة الذكية والمستدامة\n• المنزل الذكي\n• الروبوتات والبرمجة\n\nرحلة الإبداع تبدأ من فكرة... وتتحول إلى مشروع يغير المستقبل.',conclusion:'assets/books/steam-back.png'},
+    {id:3,title:'منهج المشاريع والتفكير الهندسي STEAM',isbn:'',desc:'يتعلم الطالب من خلال هذا المنهج كيف يفكر المهندس ويحل المشكلات باستخدام منهجية STEAM — يجمع العلوم والتقنية والهندسة والفنون والرياضيات في مشروعات واقعية وتجارب عملية. للصف الأول المتوسط.',img:'assets/books/steam-cover.png',dedication:'',dedicationImg:'assets/books/steam-dedication.png',intro:'',introImg:'assets/books/steam-intro.png',content:'',contentImg:'',conclusion:'',conclusionImg:'assets/books/steam-back.png'},
     {id:4,title:'الفصحى للجميع',isbn:'',desc:'مساقٌ لغويٌّ فريد يُعيد الحياة للعربية الفصحى من خلال القصص والمحادثات اليومية — مناسبٌ لجميع الأعمار ويُعلَّم بأسلوبٍ محبَّبٍ وعملي.',img:'',intro:'',dedication:'',content:'',conclusion:''}
   ],
   programs:[
@@ -582,15 +582,13 @@ function getData(){
     if(!saved.site.platforms) saved.site.platforms={};
     if(!saved.site.platforms.rwaq)
       saved.site.platforms.rwaq='https://www.rwaq.org/users/mzaytoon303-20200421200302/';
-    // دمج صور الكتب من DEFAULT إذا كانت مفقودة في localStorage
+    // دمج صور وبيانات الكتب من DEFAULT إذا كانت مفقودة في localStorage
     if(saved.books && DEFAULT.books){
       DEFAULT.books.forEach(db=>{
         const sb=saved.books.find(b=>b.id===db.id);
         if(sb){
-          if(!sb.img && db.img) sb.img=db.img;
-          if(!sb.intro && db.intro) sb.intro=db.intro;
-          if(!sb.conclusion && db.conclusion) sb.conclusion=db.conclusion;
-          if(!sb.content && db.content) sb.content=db.content;
+          const fields=['img','intro','introImg','dedication','dedicationImg','content','contentImg','conclusion','conclusionImg'];
+          fields.forEach(f=>{ if(!sb[f] && db[f]) sb[f]=db[f]; });
         }
       });
     }
