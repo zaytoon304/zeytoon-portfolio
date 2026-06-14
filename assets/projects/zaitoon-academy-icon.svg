@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="65%">
+      <stop offset="0%"   stop-color="#1A4A28"/>
+      <stop offset="100%" stop-color="#040E07"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="42%" r="50%">
+      <stop offset="0%"   stop-color="#D4AF37" stop-opacity="0.35"/>
+      <stop offset="70%"  stop-color="#D4AF37" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="fruitG" cx="30%" cy="28%" r="65%">
+      <stop offset="0%"   stop-color="#7EC850"/>
+      <stop offset="100%" stop-color="#3D6A2A"/>
+    </radialGradient>
+    <clipPath id="roundRect">
+      <rect width="512" height="512" rx="96" ry="96"/>
+    </clipPath>
+  </defs>
+
+  <!-- خلفية خضراء زمردية -->
+  <rect width="512" height="512" rx="96" fill="url(#bgGrad)"/>
+
+  <!-- هالة ذهبية -->
+  <ellipse cx="256" cy="210" rx="190" ry="170" fill="url(#halo)" clip-path="url(#roundRect)"/>
+
+  <!-- حلقة ذهبية خفية -->
+  <circle cx="256" cy="210" r="175" fill="none" stroke="#D4AF37" stroke-width="1.2" stroke-opacity="0.20" clip-path="url(#roundRect)"/>
+
+  <!-- جذور -->
+  <path d="M256 450 C252 434 244 420 232 408" fill="none" stroke="#6B4A1A" stroke-width="7" stroke-linecap="round"/>
+  <path d="M256 450 C260 434 268 420 280 408" fill="none" stroke="#6B4A1A" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- الجذع الرئيسي -->
+  <path d="M256 450 C254 428 258 406 256 382 C254 360 256 338 256 315" fill="none" stroke="#7A5820" stroke-width="28" stroke-linecap="round"/>
+  <path d="M256 450 C254 428 258 406 256 382 C254 360 256 338 256 315" fill="none" stroke="#9A7030" stroke-width="14" stroke-linecap="round" stroke-opacity="0.35"/>
+
+  <!-- أفرع رئيسية -->
+  <path d="M256 390 C234 368 206 344 170 318" fill="none" stroke="#7A5820" stroke-width="18" stroke-linecap="round"/>
+  <path d="M256 382 C278 360 306 336 342 310" fill="none" stroke="#7A5820" stroke-width="18" stroke-linecap="round"/>
+  <path d="M256 360 C236 336 212 308 184 276" fill="none" stroke="#6B4A1A" stroke-width="13" stroke-linecap="round"/>
+  <path d="M256 354 C276 330 300 303 328 272" fill="none" stroke="#6B4A1A" stroke-width="13" stroke-linecap="round"/>
+  <path d="M256 335 C256 308 256 276 256 242" fill="none" stroke="#6B4A1A" stroke-width="15" stroke-linecap="round"/>
+
+  <!-- أفرع ثانوية -->
+  <path d="M170 318 C150 298 126 274 98 250" fill="none" stroke="#5A3C14" stroke-width="9" stroke-linecap="round"/>
+  <path d="M342 310 C362 290 386 266 414 242" fill="none" stroke="#5A3C14" stroke-width="9" stroke-linecap="round"/>
+  <path d="M184 276 C164 250 148 220 132 190" fill="none" stroke="#5A3C14" stroke-width="7" stroke-linecap="round"/>
+  <path d="M328 272 C348 246 364 216 380 186" fill="none" stroke="#5A3C14" stroke-width="7" stroke-linecap="round"/>
+  <path d="M256 242 C250 214 246 184 244 154" fill="none" stroke="#5A3C14" stroke-width="8" stroke-linecap="round"/>
+  <path d="M256 242 C262 214 266 184 268 154" fill="none" stroke="#4A3010" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- ═══ أوراق — يسار سفلي ═══ -->
+  <ellipse cx="160" cy="312" rx="30" ry="13" fill="#D4AF37" transform="rotate(-42 160 312)"/>
+  <ellipse cx="138" cy="292" rx="26" ry="11" fill="#E8C766" transform="rotate(-58 138 292)"/>
+  <ellipse cx="114" cy="262" rx="24" ry="10" fill="#C9A220" transform="rotate(-65 114 262)"/>
+  <ellipse cx="96"  cy="244" rx="22" ry="9"  fill="#D4AF37" transform="rotate(-70  96 244)"/>
+  <ellipse cx="126" cy="248" rx="22" ry="9"  fill="#E8C766" transform="rotate(-55 126 248)"/>
+
+  <!-- ═══ أوراق — يمين سفلي ═══ -->
+  <ellipse cx="352" cy="304" rx="30" ry="13" fill="#D4AF37" transform="rotate( 42 352 304)"/>
+  <ellipse cx="374" cy="284" rx="26" ry="11" fill="#E8C766" transform="rotate( 58 374 284)"/>
+  <ellipse cx="398" cy="254" rx="24" ry="10" fill="#C9A220" transform="rotate( 65 398 254)"/>
+  <ellipse cx="416" cy="236" rx="22" ry="9"  fill="#D4AF37" transform="rotate( 70 416 236)"/>
+  <ellipse cx="386" cy="240" rx="22" ry="9"  fill="#E8C766" transform="rotate( 55 386 240)"/>
+
+  <!-- ═══ أوراق — يسار علوي ═══ -->
+  <ellipse cx="178" cy="270" rx="28" ry="12" fill="#D4AF37" transform="rotate(-40 178 270)"/>
+  <ellipse cx="152" cy="238" rx="25" ry="11" fill="#E8C766" transform="rotate(-55 152 238)"/>
+  <ellipse cx="130" cy="202" rx="24" ry="10" fill="#C9A220" transform="rotate(-62 130 202)"/>
+  <ellipse cx="126" cy="178" rx="22" ry="9"  fill="#D4AF37" transform="rotate(-48 126 178)"/>
+
+  <!-- ═══ أوراق — يمين علوي ═══ -->
+  <ellipse cx="334" cy="266" rx="28" ry="12" fill="#D4AF37" transform="rotate( 40 334 266)"/>
+  <ellipse cx="360" cy="234" rx="25" ry="11" fill="#E8C766" transform="rotate( 55 360 234)"/>
+  <ellipse cx="382" cy="198" rx="24" ry="10" fill="#C9A220" transform="rotate( 62 382 198)"/>
+  <ellipse cx="386" cy="174" rx="22" ry="9"  fill="#D4AF37" transform="rotate( 48 386 174)"/>
+
+  <!-- ═══ أوراق — قمة الشجرة ═══ -->
+  <ellipse cx="256" cy="238" rx="32" ry="14" fill="#D4AF37" transform="rotate(  0 256 238)"/>
+  <ellipse cx="230" cy="218" rx="28" ry="12" fill="#E8C766" transform="rotate(-18 230 218)"/>
+  <ellipse cx="282" cy="216" rx="28" ry="12" fill="#C9A220" transform="rotate( 18 282 216)"/>
+  <ellipse cx="240" cy="192" rx="28" ry="12" fill="#D4AF37" transform="rotate( -8 240 192)"/>
+  <ellipse cx="272" cy="188" rx="26" ry="11" fill="#E8C766" transform="rotate(  8 272 188)"/>
+  <ellipse cx="244" cy="160" rx="26" ry="11" fill="#C9A220" transform="rotate( -5 244 160)"/>
+  <ellipse cx="268" cy="156" rx="24" ry="10" fill="#D4AF37" transform="rotate(  5 268 156)"/>
+  <ellipse cx="256" cy="134" rx="26" ry="11" fill="#E8C766" transform="rotate(  0 256 134)"/>
+
+  <!-- ═══ ثمار الزيتون ═══ -->
+  <circle cx="134" cy="290" r="14" fill="url(#fruitG)"/>
+  <circle cx="160" cy="322" r="16" fill="url(#fruitG)"/>
+  <circle cx="378" cy="282" r="14" fill="url(#fruitG)"/>
+  <circle cx="352" cy="314" r="16" fill="url(#fruitG)"/>
+  <circle cx="126" cy="182" r="13" fill="url(#fruitG)"/>
+  <circle cx="386" cy="178" r="13" fill="url(#fruitG)"/>
+  <circle cx="230" cy="215" r="13" fill="url(#fruitG)"/>
+  <circle cx="282" cy="213" r="13" fill="url(#fruitG)"/>
+  <circle cx="256" cy="132" r="13" fill="url(#fruitG)"/>
+  <!-- بريق الثمار -->
+  <circle cx="130" cy="286" r="4" fill="rgba(255,255,255,0.55)"/>
+  <circle cx="156" cy="318" r="4" fill="rgba(255,255,255,0.55)"/>
+  <circle cx="374" cy="278" r="4" fill="rgba(255,255,255,0.55)"/>
+  <circle cx="254" cy="128" r="3" fill="rgba(255,255,255,0.55)"/>
+
+  <!-- ═══ اسم الأكاديمية في الأسفل ═══ -->
+  <text x="256" y="498" text-anchor="middle"
+        font-family="'Amiri', 'Georgia', serif"
+        font-size="46" font-weight="700"
+        fill="#D4AF37" letter-spacing="2"
+        style="text-shadow:0 2px 8px rgba(0,0,0,0.5)">زيتون</text>
+</svg>
