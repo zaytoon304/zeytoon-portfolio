@@ -537,7 +537,7 @@ const DEFAULT = {
     name:'محمد محمود السيد زيتون',
     title:'مشرف أكاديمي للتطوير والموهبة والروبوت',
     bio:'رحلةٌ في التدريس تمتدّ لنحو ٣١ عامًا، منها ١٤ عامًا في المملكة العربية السعودية. بدأت معلمًا وتدرّجت حتى أصبحت مشرفًا في مجالي الموهبة والروبوت.',
-    photo:'',
+    photo:'assets/photo.jpg',
     email:'zaytoon304@gmail.com',
     whatsapp:'',
     location:'المملكة العربية السعودية',
@@ -558,11 +558,21 @@ const DEFAULT = {
     {id:5,icon:'🖥️',title:'المنصات الرقمية',desc:'بناء أدوات ومنصات تخدم الطلاب والمعلمين والإدارة.'},
     {id:6,icon:'📊',title:'أنظمة القياس',desc:'مؤشراتٌ واضحة لقياس أداء المعلمين والطلاب وتطويره.'}
   ],
-  courses:[],
+  courses:[
+    {id:1,title:'كورس الروبوت للمبتدئين',platform:'أكاديمية زيتون',year:'2024',desc:'من الصفر حتى الاحتراف — برمجة وتصميم وبناء روبوتات والمشاركة في المسابقات.',img:'assets/courses/course-robotics-1.jpg',type:'given'},
+    {id:2,title:'تعلم الروبوت — اصنع مستقبلك',platform:'أكاديمية زيتون',year:'2024',desc:'كورس الروبوت للمبتدئين: أساسيات الروبوتات والإلكترونيات، البرمجة، وحل المشكلات.',img:'assets/courses/course-robotics-2.jpg',type:'given'},
+    {id:3,title:'شهادة اجتياز دورة تدريبية',platform:'جهة تدريبية معتمدة',year:'2023',desc:'دورة تدريبية متخصصة — شهادة اجتياز رسمية.',img:'assets/certificates/cert-training-1.jpg',type:'received'},
+    {id:4,title:'شهادة اجتياز دورة تدريبية ٢',platform:'جهة تدريبية معتمدة',year:'2023',desc:'دورة تدريبية متخصصة — شهادة اجتياز رسمية.',img:'assets/certificates/cert-training-2.jpg',type:'received'},
+    {id:5,title:'ساعة العبقرية',platform:'برنامج تدريبي',year:'2023',desc:'برنامج ساعة العبقرية — شهادة مشاركة واجتياز.',img:'assets/certificates/cert-genius-hour.jpg',type:'received'}
+  ],
   achievements:[
-    {id:1,year:'2024',icon:'🥇',title:'بطولة WRO الإقليمية',desc:'تأهيل فريق الطلاب للمرحلة الإقليمية في بطولة الروبوت العالمية.'},
-    {id:2,year:'2022',icon:'🏆',title:'جائزة المعلم المتميز',desc:'تقديرٌ رسمي من وزارة التعليم على الإنجازات التعليمية.'},
-    {id:3,year:'2020',icon:'📖',title:'نشر ثلاثة مؤلفات',desc:'إصدار كتب متخصصة في الروبوت والموهبة والحساب الذهني بردمك دولي.'}
+    {id:1,year:'2024',icon:'🥇',title:'بطولة WRO الإقليمية',desc:'تأهيل فريق الطلاب للمرحلة الإقليمية في بطولة الروبوت العالمية.',img:''},
+    {id:2,year:'2022',icon:'🏆',title:'جائزة المعلم المتميز',desc:'تقديرٌ رسمي من وزارة التعليم على الإنجازات التعليمية.',img:''},
+    {id:3,year:'2020',icon:'📖',title:'نشر مؤلفات متخصصة',desc:'إصدار 5 كتب في الروبوت والموهبة والحساب الذهني وSTEAM والفصحى بردمك دولي.',img:''},
+    {id:4,year:'2018',icon:'🎖️',title:'Microsoft Innovative Educator — MIE',desc:'شهادة Microsoft للمعلم المبتكر المعتمد — تقديراً للإنجازات التعليمية المتميزة.',img:'assets/certificates/microsoft-mie.jpg'},
+    {id:5,year:'2017',icon:'🏅',title:'T.O.T — تدريب المدربين (IWI)',desc:'شهادة تدريب المدربين من المعهد الدولي واشنطن — بتقدير ممتاز 95%. معتمدة من Cambridge Training College Britain.',img:'assets/certificates/tot-iwi.jpg'},
+    {id:6,year:'2017',icon:'🏅',title:'T.O.T — تدريب المدربين (موثقة)',desc:'نسخة موثقة رسمياً من شهادة تدريب المدربين IWI — موثقة من الأكاديمية البحرية للعلوم والتكنولوجيا.',img:'assets/certificates/tot-iwi-auth.jpg'},
+    {id:7,year:'2017',icon:'🎓',title:'T.O.T — أكاديمية Capital (جامعة عين شمس)',desc:'شهادة إتمام دورة تدريب المدربين من أكاديمية Capital بالتعاون مع جامعة عين شمس.',img:'assets/certificates/tot-capital.jpg'}
   ],
   gallery:[],
   videos:[],
@@ -757,7 +767,14 @@ function renderAchievements(achs){
   c.innerHTML=achs.map(a=>`
     <div class="ach-item reveal">
       <div class="ach-yr-col"><div class="ach-yr">${a.year||'—'}</div><div class="ach-line"></div></div>
-      <div class="ach-card"><span class="ach-ico">${a.icon||'⭐'}</span><div><h3>${a.title}</h3><p>${a.desc||''}</p></div></div>
+      <div class="ach-card">
+        <span class="ach-ico">${a.icon||'⭐'}</span>
+        <div style="flex:1">
+          <h3>${a.title}</h3>
+          <p>${a.desc||''}</p>
+          ${a.img?`<img src="${a.img}" alt="${a.title}" style="margin-top:12px;width:100%;max-width:420px;border-radius:10px;border:1px solid var(--border);cursor:pointer" onclick="openLightbox('${a.img}')">` : ''}
+        </div>
+      </div>
     </div>`).join('');
   reReveal();
 }
