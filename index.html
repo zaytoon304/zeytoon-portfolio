@@ -147,6 +147,37 @@ button{font-family:var(--font);cursor:pointer;border:none;background:none}
 .tl-title{font-size:.92rem;font-weight:700;margin-bottom:4px}
 .tl-desc{font-size:.82rem;color:var(--muted)}
 
+/* ── CV VIEWER ── */
+.cv-btn{display:inline-flex;align-items:center;gap:10px;margin-top:20px;padding:12px 26px;background:linear-gradient(135deg,var(--gold),hsl(43 80% 45%));color:#000;font-weight:800;font-size:.9rem;border-radius:100px;border:none;cursor:pointer;transition:all .3s}
+.cv-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px hsl(43 96% 56%/.4)}
+.cv-modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);overflow-y:auto;padding:20px}
+.cv-modal.open{display:flex;flex-direction:column;align-items:center}
+.cv-modal-head{width:100%;max-width:680px;display:flex;justify-content:space-between;align-items:center;padding:0 0 16px;color:#fff}
+.cv-modal-head h3{font-size:1.1rem;font-weight:700}
+.cv-close-btn{background:rgba(255,255,255,.1);border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cv-page-img{width:100%;max-width:680px;border-radius:12px;margin-bottom:16px;box-shadow:0 8px 40px rgba(0,0,0,.5)}
+.cv-dl-btn{display:inline-flex;align-items:center;gap:8px;margin-top:8px;margin-bottom:40px;padding:12px 28px;background:var(--gold);color:#000;font-weight:800;border-radius:100px;text-decoration:none;font-size:.9rem}
+
+/* ── INFOGRAPHIC FLOAT BANNER ── */
+.info-float{position:fixed;bottom:90px;left:20px;z-index:8000;cursor:pointer}
+@media(max-width:600px){.info-float{bottom:80px;left:12px}}
+.info-float-btn{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,hsl(210 80% 45%),hsl(210 60% 30%));border:3px solid hsl(210 80% 65%);box-shadow:0 4px 20px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:1.6rem;transition:all .3s;animation:infoPulse 3s infinite}
+.info-float-btn:hover{transform:scale(1.1)}
+@keyframes infoPulse{0%,100%{box-shadow:0 4px 20px rgba(0,0,0,.4)}50%{box-shadow:0 4px 30px hsl(210 80% 50%/.6)}}
+.info-badge{position:absolute;top:-4px;right:-4px;background:#e74c3c;color:#fff;width:22px;height:22px;border-radius:50%;font-size:.7rem;font-weight:900;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+.info-tooltip{position:absolute;left:70px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.85);color:#fff;white-space:nowrap;padding:6px 14px;border-radius:8px;font-size:.78rem;font-weight:700;pointer-events:none;opacity:0;transition:opacity .2s}
+.info-float:hover .info-tooltip{opacity:1}
+.info-modal{display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.88);padding:20px;overflow-y:auto}
+.info-modal.open{display:flex;flex-direction:column;align-items:center}
+.info-modal-head{width:100%;max-width:600px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;color:#fff}
+.info-modal-head h3{font-size:1rem;font-weight:700}
+.info-cards-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;width:100%;max-width:900px}
+@media(max-width:700px){.info-cards-row{grid-template-columns:1fr}}
+.info-card{background:var(--bg2);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .3s;border:1px solid var(--border)}
+.info-card:hover{transform:translateY(-4px)}
+.info-card img{width:100%;display:block}
+.info-card-lbl{padding:10px;font-size:.8rem;font-weight:700;color:var(--muted);text-align:center}
+
 /* ── BOOKS ── */
 .book-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all .3s;display:flex;flex-direction:column}
 .book-card:hover{border-color:var(--border-g);transform:translateY(-6px);box-shadow:0 20px 60px hsl(43 96% 56%/.15)}
@@ -400,6 +431,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:36px 0;t
           <div class="hi-card"><span class="hi-ico">🏆</span><div><h4>الاعتمادات</h4><p>شهادات مايكروسوفت ودورات تدريبية متخصصة</p></div></div>
           <div class="hi-card"><span class="hi-ico">📚</span><div><h4>المؤلفات</h4><p>كتب منشورة بردمك رسمي في الروبوت والحساب الذهني</p></div></div>
         </div>
+        <button class="cv-btn" onclick="openCV()">📄 عرض السيرة الذاتية كاملة</button>
       </div>
       <div class="reveal">
         <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:24px;color:var(--gold)">المسيرة المهنية</h3>
@@ -1036,6 +1068,90 @@ statsObs.observe(document.querySelector('.stats-bar'));
 // ── INIT ──────────────────────────────────────────
 render();
 window.addEventListener('scroll',reReveal);
+
+// ── السيرة الذاتية ──────────────────────────────
+function openCV(){
+  document.getElementById('cv-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCV(){
+  document.getElementById('cv-modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ── الأيقونة الإعلانية ─────────────────────────
+const INFOGRAPHICS=[
+  {src:'assets/infographics/info-behavior-1.jpg',lbl:'إنفوجرافيك سلوكي ١'},
+  {src:'assets/infographics/info-behavior-2.jpg',lbl:'إنفوجرافيك سلوكي ٢'},
+  {src:'assets/infographics/info-behavior-3.jpg',lbl:'إنفوجرافيك سلوكي ٣'},
+  {src:'assets/infographics/info-behavior-4.jpg',lbl:'إنفوجرافيك سلوكي ٤'},
+  {src:'assets/infographics/info-robot-1.jpg',lbl:'روبوت وتقنية ١'},
+  {src:'assets/infographics/info-robot-2.jpg',lbl:'روبوت وتقنية ٢'},
+  {src:'assets/infographics/info-robot-3.jpg',lbl:'روبوت وتقنية ٣'},
+  {src:'assets/infographics/info-edu-1.jpg',lbl:'تعليمي ١'},
+  {src:'assets/infographics/info-edu-2.jpg',lbl:'تعليمي ٢'},
+  {src:'assets/infographics/info-edu-3.jpg',lbl:'تعليمي ٣'},
+];
+function getTodayInfos(){
+  // كل يوم تُختار ٣ صور مختلفة بشكل ثابت طوال اليوم
+  const day=Math.floor(Date.now()/86400000);
+  const idx=[];
+  const arr=[...Array(INFOGRAPHICS.length).keys()];
+  let seed=day;
+  while(idx.length<3&&arr.length){
+    seed=(seed*1103515245+12345)&0x7fffffff;
+    const pick=seed%arr.length;
+    idx.push(arr.splice(pick,1)[0]);
+  }
+  return idx.map(i=>INFOGRAPHICS[i]);
+}
+function openInfoModal(){
+  const modal=document.getElementById('info-modal');
+  const row=document.getElementById('info-cards-row');
+  const items=getTodayInfos();
+  row.innerHTML=items.map(it=>`
+    <div class="info-card" onclick="openLightbox('${it.src}')">
+      <img src="${it.src}" alt="${it.lbl}" onerror="this.parentElement.style.display='none'">
+      <div class="info-card-lbl">${it.lbl}</div>
+    </div>`).join('');
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeInfoModal(){
+  document.getElementById('info-modal').classList.remove('open');
+  document.body.style.overflow='';
+}
 </script>
+
+<!-- مودال السيرة الذاتية -->
+<div class="cv-modal" id="cv-modal" onclick="if(event.target===this)closeCV()">
+  <div class="cv-modal-head">
+    <h3>📄 السيرة الذاتية — محمد محمود السيد زيتون</h3>
+    <button class="cv-close-btn" onclick="closeCV()">✕</button>
+  </div>
+  <img class="cv-page-img" src="assets/cv/cv-page1.jpg" alt="السيرة الذاتية — صفحة ١">
+  <img class="cv-page-img" src="assets/cv/cv-page2.jpg" alt="السيرة الذاتية — صفحة ٢">
+  <img class="cv-page-img" src="assets/cv/cv-page3.jpg" alt="السيرة الذاتية — صفحة ٣">
+  <img class="cv-page-img" src="assets/cv/cv-page4.jpg" alt="السيرة الذاتية — صفحة ٤">
+  <img class="cv-page-img" src="assets/cv/cv-page5.jpg" alt="السيرة الذاتية — صفحة ٥">
+  <a class="cv-dl-btn" href="assets/cv/cv-page1.jpg" download="السيرة-الذاتية-زيتون.jpg">⬇ تحميل الصفحة الأولى</a>
+</div>
+
+<!-- أيقونة الإنفوجرافيك العائمة -->
+<div class="info-float" onclick="openInfoModal()">
+  <div class="info-float-btn">📊</div>
+  <div class="info-badge">3</div>
+  <div class="info-tooltip">إنفوجرافيك اليوم</div>
+</div>
+
+<!-- مودال الإنفوجرافيك -->
+<div class="info-modal" id="info-modal" onclick="if(event.target===this)closeInfoModal()">
+  <div class="info-modal-head" style="max-width:900px;width:100%">
+    <h3>📊 إنفوجرافيك اليوم — ٣ صور مختارة</h3>
+    <button class="cv-close-btn" onclick="closeInfoModal()">✕</button>
+  </div>
+  <div class="info-cards-row" id="info-cards-row"></div>
+</div>
+
 </body>
 </html>
