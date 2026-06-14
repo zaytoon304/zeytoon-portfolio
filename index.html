@@ -574,13 +574,32 @@ const DEFAULT = {
     {id:6,year:'2017',icon:'🏅',title:'T.O.T — تدريب المدربين (موثقة)',desc:'نسخة موثقة رسمياً من شهادة تدريب المدربين IWI — موثقة من الأكاديمية البحرية للعلوم والتكنولوجيا.',img:'assets/certificates/tot-iwi-auth.jpg'},
     {id:7,year:'2017',icon:'🎓',title:'T.O.T — أكاديمية Capital (جامعة عين شمس)',desc:'شهادة إتمام دورة تدريب المدربين من أكاديمية Capital بالتعاون مع جامعة عين شمس.',img:'assets/certificates/tot-capital.jpg'}
   ],
-  gallery:[],
+  gallery:[
+    {img:'assets/gallery/training-group.jpg',caption:'دورة تدريبية للمعلمين'},
+    {img:'assets/gallery/training-session.jpg',caption:'جلسة تدريبية تفاعلية'},
+    {img:'assets/gallery/roborave-win.jpg',caption:'🏆 الفوز في بطولة RoboRAVE الدولية'},
+    {img:'assets/gallery/mental-math-champ.jpg',caption:'التصفيات النهائية لمسابقة الحساب الذهني'},
+    {img:'assets/gallery/training-doc-4.jpg',caption:'وثيقة تدريبية — التعلم النشط'},
+    {img:'assets/gallery/training-doc-5.jpg',caption:'وثيقة تدريبية — مهارات التدريس'},
+    {img:'assets/gallery/vid-thumb-img_5884.jpg',caption:'مشروع روبوتي — الطلاب في العمل'},
+    {img:'assets/gallery/vid-thumb-img_5887.jpg',caption:'نموذج روبوتي إبداعي'},
+    {img:'assets/gallery/vid-thumb-img_6061.jpg',caption:'مشروع الروبوت — عرض ميداني'},
+    {img:'assets/gallery/vid-thumb-img_5958.jpg',caption:'ورشة عمل الروبوتات'},
+    {img:'assets/gallery/vid-thumb-img_0489.jpg',caption:'تدريب عملي على الروبوت'},
+    {img:'assets/gallery/vid-thumb-7e1e743c17f2.jpg',caption:'مشروع روبوتي متقدم'}
+  ],
   videos:[
     {id:1,title:'النفق الذكي',desc:'مشروع روبوتي إبداعي — نموذج النفق الذكي.',url:'https://youtu.be/iFfNR3utqkU?si=zVBsSN9JpETNZ5P1',img:''},
     {id:2,title:'مشروع الدعم النفسي للفضاء',desc:'مشروع مبتكر يجمع التقنية والإنسانية.',url:'https://youtu.be/UqcFcGR7qDs?si=qSmlrWmGuB053lHk',img:''},
     {id:3,title:'كلمتي في حفل فوز WRO',desc:'كلمة في حفل تكريم الفائزين ببطولة الروبوت العالمية.',url:'https://youtu.be/07Z0peJlXwE?si=KRC1SKxDYOGM5bxc',img:''},
     {id:4,title:'المزرعة الذكية',desc:'مشروع روبوتي — نموذج المزرعة الذكية.',url:'https://youtu.be/32irsBcKwn4?si=kjePWT4bA5GAs0uy',img:''},
-    {id:5,title:'صناع المستقبل',desc:'فيديو يوثّق رحلة الطلاب في صناعة المستقبل.',url:'https://youtu.be/JTsh-xhHcP4?si=Nd72B8KvHy4V0NgA',img:''}
+    {id:5,title:'صناع المستقبل',desc:'فيديو يوثّق رحلة الطلاب في صناعة المستقبل.',url:'https://youtu.be/JTsh-xhHcP4?si=Nd72B8KvHy4V0NgA',img:''},
+    {id:6,title:'مشروع روبوتي — تصوير ميداني',desc:'توثيق ميداني لمشاريع الروبوت الطلابية.',url:'',img:'',localSrc:'assets/videos/IMG_0667.mp4'},
+    {id:7,title:'دورة تدريبية للمعلمين',desc:'جلسة تدريبية تفاعلية مع المعلمين.',url:'',img:'',localSrc:'assets/videos/IMG_0668.mp4'},
+    {id:8,title:'عرض مشروع روبوتي',desc:'الطلاب يعرضون مشاريعهم الروبوتية.',url:'',img:'',localSrc:'assets/videos/IMG_0292.mp4'},
+    {id:9,title:'مسابقة الروبوت',desc:'لحظات من مسابقة الروبوتات.',url:'',img:'',localSrc:'assets/videos/IMG_0342.mp4'},
+    {id:10,title:'ورشة تدريبية',desc:'ورشة عمل تطبيقية على الروبوت.',url:'',img:'',localSrc:'assets/videos/64f751a7e86049f7975c88a19453ca86.mp4'},
+    {id:11,title:'نموذج روبوتي مبتكر',desc:'عرض نموذج روبوتي من إعداد الطلاب.',url:'',img:'',localSrc:'assets/videos/4300d7ba-fcc4-4317-bb54-fa9631e61f32.mp4'}
   ],
   innovations:{
     stem:[{id:1,title:'منهج STEM المتكامل',desc:'منهجيةٌ تدمج العلوم والتقنية والهندسة والرياضيات في مشاريع عملية.',img:''}],
@@ -816,6 +835,15 @@ function renderVideos(vids){
   c.innerHTML=vids.map(v=>{
     const embed=ytEmbed(v.url);
     const thumb=v.img||ytThumb(v.url);
+    const isLocal=!embed&&v.localSrc;
+    if(isLocal){
+      return`<div class="vid-card reveal">
+        <video controls preload="none" poster="${thumb||''}" style="width:100%;border-radius:var(--r);background:#000">
+          <source src="${v.localSrc}" type="video/mp4">
+        </video>
+        <div class="vid-body"><h3>${v.title}</h3>${v.desc?`<p>${v.desc}</p>`:''}</div>
+      </div>`;
+    }
     return`<div class="vid-card reveal" onclick="${embed?`openVideo('${embed}')`:''}" style="cursor:${embed?'pointer':'default'}">
       <div class="vid-thumb">
         ${thumb?`<img src="${thumb}" alt="${v.title}">`:'' }
