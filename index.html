@@ -1080,30 +1080,88 @@ function closeCV(){
 }
 
 // ── الأيقونة الإعلانية ─────────────────────────
-const INFOGRAPHICS=[
-  {src:'assets/infographics/info-behavior-1.jpg',lbl:'إنفوجرافيك سلوكي ١'},
-  {src:'assets/infographics/info-behavior-2.jpg',lbl:'إنفوجرافيك سلوكي ٢'},
-  {src:'assets/infographics/info-behavior-3.jpg',lbl:'إنفوجرافيك سلوكي ٣'},
-  {src:'assets/infographics/info-behavior-4.jpg',lbl:'إنفوجرافيك سلوكي ٤'},
-  {src:'assets/infographics/info-robot-1.jpg',lbl:'روبوت وتقنية ١'},
-  {src:'assets/infographics/info-robot-2.jpg',lbl:'روبوت وتقنية ٢'},
-  {src:'assets/infographics/info-robot-3.jpg',lbl:'روبوت وتقنية ٣'},
-  {src:'assets/infographics/info-edu-1.jpg',lbl:'تعليمي ١'},
-  {src:'assets/infographics/info-edu-2.jpg',lbl:'تعليمي ٢'},
-  {src:'assets/infographics/info-edu-3.jpg',lbl:'تعليمي ٣'},
-];
+const INFOGRAPHICS={
+  behavior:[
+    {src:'assets/infographics/info-behavior-1.jpg',lbl:'تعلم نشط ومشكلات سلوكية ١'},
+    {src:'assets/infographics/info-behavior-2.jpg',lbl:'تعلم نشط ومشكلات سلوكية ٢'},
+    {src:'assets/infographics/info-behavior-3.jpg',lbl:'تعلم نشط ومشكلات سلوكية ٣'},
+    {src:'assets/infographics/info-behavior-4.jpg',lbl:'تعلم نشط ومشكلات سلوكية ٤'},
+    {src:'assets/infographics/info-behavior-5.jpg',lbl:'تعلم نشط ومشكلات سلوكية ٥'},
+    {src:'assets/infographics/info-behavior-6.jpg',lbl:'تعلم نشط ومشكلات سلوكية ٦'},
+    {src:'assets/infographics/info-behavior-7.jpg',lbl:'تعلم نشط ومشكلات سلوكية ٧'},
+    {src:'assets/infographics/info-behavior-8.jpg',lbl:'تعلم نشط ومشكلات سلوكية ٨'},
+    {src:'assets/infographics/info-behavior-9.jpg',lbl:'تعلم نشط ومشكلات سلوكية ٩'},
+    {src:'assets/infographics/info-behavior-10.jpg',lbl:'تعلم نشط ومشكلات سلوكية ١٠'},
+    {src:'assets/infographics/info-behavior-11.jpg',lbl:'تعلم نشط ومشكلات سلوكية ١١'},
+    {src:'assets/infographics/info-behavior-12.jpg',lbl:'تعلم نشط ومشكلات سلوكية ١٢'},
+    {src:'assets/infographics/info-behavior-13.jpg',lbl:'تعلم نشط ومشكلات سلوكية ١٣'},
+    {src:'assets/infographics/info-behavior-14.jpg',lbl:'تعلم نشط ومشكلات سلوكية ١٤'},
+    {src:'assets/infographics/info-behavior-15.jpg',lbl:'تعلم نشط ومشكلات سلوكية ١٥'},
+    {src:'assets/infographics/info-behavior-16.jpg',lbl:'تعلم نشط ومشكلات سلوكية ١٦'},
+    {src:'assets/infographics/info-behavior-17.jpg',lbl:'تعلم نشط ومشكلات سلوكية ١٧'},
+    {src:'assets/infographics/info-behavior-18.jpg',lbl:'تعلم نشط ومشكلات سلوكية ١٨'},
+    {src:'assets/infographics/info-behavior-19.jpg',lbl:'تعلم نشط ومشكلات سلوكية ١٩'},
+  ],
+  robot:[
+    {src:'assets/infographics/info-robot-1.jpg',lbl:'روبوت وتقنية ١'},
+    {src:'assets/infographics/info-robot-2.jpg',lbl:'روبوت وتقنية ٢'},
+    {src:'assets/infographics/info-robot-3.jpg',lbl:'روبوت وتقنية ٣'},
+    {src:'assets/infographics/info-robot-4.jpg',lbl:'روبوت وتقنية ٤'},
+    {src:'assets/infographics/info-robot-5.jpg',lbl:'روبوت وتقنية ٥'},
+    {src:'assets/infographics/info-robot-6.jpg',lbl:'روبوت وتقنية ٦'},
+    {src:'assets/infographics/info-robot-7.jpg',lbl:'روبوت وتقنية ٧'},
+    {src:'assets/infographics/info-robot-8.jpg',lbl:'روبوت وتقنية ٨'},
+    {src:'assets/infographics/info-robot-9.jpg',lbl:'روبوت وتقنية ٩'},
+    {src:'assets/infographics/info-robot-10.jpg',lbl:'روبوت وتقنية ١٠'},
+    {src:'assets/infographics/info-robot-11.jpg',lbl:'روبوت وتقنية ١١'},
+    {src:'assets/infographics/info-robot-12.jpg',lbl:'روبوت وتقنية ١٢'},
+    {src:'assets/infographics/info-robot-13.jpg',lbl:'روبوت وتقنية ١٣'},
+    {src:'assets/infographics/info-robot-14.jpg',lbl:'روبوت وتقنية ١٤'},
+    {src:'assets/infographics/info-robot-15.jpg',lbl:'روبوت وتقنية ١٥'},
+    {src:'assets/infographics/info-robot-16.jpg',lbl:'روبوت وتقنية ١٦'},
+    {src:'assets/infographics/info-robot-17.jpg',lbl:'روبوت وتقنية ١٧'},
+    {src:'assets/infographics/info-robot-18.jpg',lbl:'روبوت وتقنية ١٨'},
+    {src:'assets/infographics/info-robot-19.jpg',lbl:'روبوت وتقنية ١٩'},
+    {src:'assets/infographics/info-robot-20.jpg',lbl:'روبوت وتقنية ٢٠'},
+    {src:'assets/infographics/info-robot-21.jpg',lbl:'روبوت وتقنية ٢١'},
+    {src:'assets/infographics/info-robot-22.jpg',lbl:'روبوت وتقنية ٢٢'},
+  ],
+  edu:[
+    {src:'assets/infographics/info-edu-1.jpg',lbl:'تعليمي - مناهج ١'},
+    {src:'assets/infographics/info-edu-2.jpg',lbl:'تعليمي - مناهج ٢'},
+    {src:'assets/infographics/info-edu-3.jpg',lbl:'تعليمي - مناهج ٣'},
+    {src:'assets/infographics/info-edu-4.jpg',lbl:'تعليمي - مناهج ٤'},
+    {src:'assets/infographics/info-edu-5.jpg',lbl:'تعليمي - مناهج ٥'},
+    {src:'assets/infographics/info-edu-6.jpg',lbl:'تعليمي - مناهج ٦'},
+    {src:'assets/infographics/info-edu-7.jpg',lbl:'تعليمي - مناهج ٧'},
+    {src:'assets/infographics/info-edu-8.jpg',lbl:'تعليمي - مناهج ٨'},
+    {src:'assets/infographics/info-edu-9.jpg',lbl:'تعليمي - مناهج ٩'},
+    {src:'assets/infographics/info-edu-10.jpg',lbl:'تعليمي - مناهج ١٠'},
+    {src:'assets/infographics/info-edu-11.jpg',lbl:'تعليمي - مناهج ١١'},
+    {src:'assets/infographics/info-edu-12.jpg',lbl:'تعليمي - مناهج ١٢'},
+    {src:'assets/infographics/info-edu-13.jpg',lbl:'تعليمي - مناهج ١٣'},
+    {src:'assets/infographics/info-edu-14.jpg',lbl:'تعليمي - مناهج ١٤'},
+    {src:'assets/infographics/info-edu-15.jpg',lbl:'تعليمي - مناهج ١٥'},
+    {src:'assets/infographics/info-edu-16.jpg',lbl:'تعليمي - مناهج ١٦'},
+    {src:'assets/infographics/info-edu-17.jpg',lbl:'تعليمي - مناهج ١٧'},
+    {src:'assets/infographics/info-edu-18.jpg',lbl:'تعليمي - مناهج ١٨'},
+    {src:'assets/infographics/info-edu-19.jpg',lbl:'تعليمي - مناهج ١٩'},
+    {src:'assets/infographics/info-edu-20.jpg',lbl:'تعليمي - مناهج ٢٠'},
+    {src:'assets/infographics/info-edu-21.jpg',lbl:'تعليمي - مناهج ٢١'},
+    {src:'assets/infographics/info-edu-22.jpg',lbl:'تعليمي - مناهج ٢٢'},
+    {src:'assets/infographics/info-edu-23.jpg',lbl:'تعليمي - مناهج ٢٣'},
+    {src:'assets/infographics/info-edu-24.jpg',lbl:'تعليمي - مناهج ٢٤'},
+    {src:'assets/infographics/info-edu-25.jpg',lbl:'تعليمي - مناهج ٢٥'},
+  ]
+};
 function getTodayInfos(){
-  // كل يوم تُختار ٣ صور مختلفة بشكل ثابت طوال اليوم
+  // كل يوم صورة واحدة من كل فئة — متنوعة دائماً
   const day=Math.floor(Date.now()/86400000);
-  const idx=[];
-  const arr=[...Array(INFOGRAPHICS.length).keys()];
-  let seed=day;
-  while(idx.length<3&&arr.length){
-    seed=(seed*1103515245+12345)&0x7fffffff;
-    const pick=seed%arr.length;
-    idx.push(arr.splice(pick,1)[0]);
-  }
-  return idx.map(i=>INFOGRAPHICS[i]);
+  return [
+    INFOGRAPHICS.behavior[day%INFOGRAPHICS.behavior.length],
+    INFOGRAPHICS.robot[day%INFOGRAPHICS.robot.length],
+    INFOGRAPHICS.edu[day%INFOGRAPHICS.edu.length],
+  ];
 }
 function openInfoModal(){
   const modal=document.getElementById('info-modal');
